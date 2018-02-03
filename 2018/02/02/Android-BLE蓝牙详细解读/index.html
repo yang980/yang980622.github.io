@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="前言：对BLE蓝牙感兴趣的朋友可以加入我们讨论群：QQ：494309361（Android蓝牙开发小纵队）随着物联网时代的到来，越来越多的智能硬件设备开始流行起来，比如智能手环、心率检测仪、以及各式各样的智能家具和玩具类产品。安卓4.3(API 18)为BLE的核心功能提供平台支持和API，App可">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Alex Jerry">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Android-BLE蓝牙详细解读"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Jerry"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Android-BLE蓝牙详细解读 - Jerry</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="篮球、旅游">
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">简书</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                主页
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                学习
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/collection">
+                            
+                                收藏
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                生活
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Alex-Jerry/">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Android-BLE蓝牙详细解读</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-02-02
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><h3 id="对BLE蓝牙感兴趣的朋友可以加入我们讨论群："><a href="#对BLE蓝牙感兴趣的朋友可以加入我们讨论群：" class="headerlink" title="对BLE蓝牙感兴趣的朋友可以加入我们讨论群："></a>对BLE蓝牙感兴趣的朋友可以加入我们讨论群：</h3><h3 id="QQ：494309361（Android蓝牙开发小纵队）"><a href="#QQ：494309361（Android蓝牙开发小纵队）" class="headerlink" title="QQ：494309361（Android蓝牙开发小纵队）"></a>QQ：494309361（Android蓝牙开发小纵队）</h3><p><img src="http://upload-images.jianshu.io/upload_images/3884117-4c840a7ee4c60669.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/540" alt=""><br>随着物联网时代的到来，越来越多的智能硬件设备开始流行起来，比如智能手环、心率检测仪、以及各式各样的智能家具和玩具类产品。安卓4.3(API 18)为BLE的核心功能提供平台支持和API，App可以利用它来发现设备、查询服务和读写特性。相比传统的蓝牙，BLE更显著的特点是低功耗。本文主要讲解Android低功耗蓝牙的api使用以及蓝牙扫描、连接、发送数据、接收数据等一系列操作，并主要介绍本人封装的BleLib蓝牙库，非常适合蓝牙初学者使用，只需要一行代码注入就OK了，而且用法也极其简单，下面会专门讲解BleLib库的使用。</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li><h4 id="原生API的详细讲解"><a href="#原生API的详细讲解" class="headerlink" title="原生API的详细讲解"></a>原生API的详细讲解</h4></li>
+<li><h4 id="BleLib库的优点"><a href="#BleLib库的优点" class="headerlink" title="BleLib库的优点"></a>BleLib库的优点</h4></li>
+<li><h4 id="如何使用该库"><a href="#如何使用该库" class="headerlink" title="如何使用该库"></a>如何使用该库</h4></li>
+<li><h4 id="BleLib库的详细分析"><a href="#BleLib库的详细分析" class="headerlink" title="BleLib库的详细分析"></a>BleLib库的详细分析</h4></li>
+</ul>
+<p>废话不说，先来看下Demo中的效果图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3884117-49f080ad44b60946.gif?imageMogr2/auto-orient/strip" alt="Demo预览图.gif"></p>
+<h4 id="一、原生API的详细讲解"><a href="#一、原生API的详细讲解" class="headerlink" title="一、原生API的详细讲解"></a>一、原生API的详细讲解</h4><p>在BLE协议中，有两个角色，周边（Periphery）和中央（Central）；周边是数据提供者，中央是数据使用/处理者，一个中央可以同时连接多个周边，但是一个周边某一时刻只能连接一个中央。<br>首先使用蓝牙就不得不说BluetoothGatt和BluetoothGattCallback这两个类，该类继承自BluetoothProfile，BluetoothGatt作为中央来使用和处理数据，通过BluetoothGatt可以连接设备（connect）,发现服务（discoverServices），并把相应地属性返回到BluetoothGattCallback，BluetoothGattCallback返回中央的状态和周边提供的数据。</p>
+<h6 id="1-蓝牙开发流程："><a href="#1-蓝牙开发流程：" class="headerlink" title="1. 蓝牙开发流程："></a>1. 蓝牙开发流程：</h6><p>我们蓝牙操作的主要目的就是为了拿到中央BluetoothGatt这个对象，进而进行接下来的所有一系列操作，如下：</p>
+<pre><code>1.先拿到BluetoothManager bluetoothManager 
+        = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+
+2.再拿到BluetoothAdapt btAdapter = bluetoothManager.getAdapter();
+
+3.开始扫描：btAdapter.startLeScan( BluetoothAdapter.LeScanCallback);
+
+4.从LeScanCallback中得到BluetoothDevice 
+public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {…..}
+
+5.用BluetoothDevice得到BluetoothGatt：gatt = device.connectGatt(this, true, gattCallback);
+</code></pre><p>这时总算拿到中央BluetoothGatt了，它有很多的方法，调用这些方法，你就可以通过BluetoothGattCallback和周边BluetoothGattServer交互了。</p>
+<h6 id="2-主要类的大致理解："><a href="#2-主要类的大致理解：" class="headerlink" title="2. 主要类的大致理解："></a>2. 主要类的大致理解：</h6><ul>
+<li><p>BluetoothProfile： 一个通用的规范，按照这个规范来收发数据。</p>
+</li>
+<li><p>BluetoothManager：通过BluetoothManager来获取BluetoothAdapter</p>
+<pre><code>如：BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+</code></pre></li>
+<li><p>BluetoothAdapter：一个Android系统只有一个BluetoothAdapter ，通过BluetoothManager 获取</p>
+<pre><code>BluetoothAdapter mBluetoothAdapter = bluetoothManager.getAdapter();
+</code></pre></li>
+<li><p>BluetoothGattDescriptor：可以看成是描述符，对Characteristic的描述，包括范围、计量单位等。</p>
+</li>
+<li><p>BluetoothGattService：服务，Characteristic的集合。</p>
+</li>
+<li><p>BluetoothGattCallback：已经连接上设备，对设备的某些操作后返回的结果。这里必须提醒下，已经连接上设备后的才可以返回，没有返回的认真看看有没有连接上设备。</p>
+<pre><code>private BluetoothGattCallback GattCallback = new BluetoothGattCallback() {
+
+  // 这里有9个要实现的方法，看情况要实现那些，用到那些就实现那些
+
+  public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState){};
+
+  public void onCharacteristicWrite(BluetoothGatt gatt, 
+                      BluetoothGattCharacteristic characteristic, int status){
+
+                      };            
+
+          };
+ BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+
+ BluetoothGatt gatt = device.connectGatt(this, false, mGattCallback);
+</code></pre></li>
+</ul>
+<h6 id="3-上面所说的9个要实现的方法，所对应蓝牙交互的主要对应关系："><a href="#3-上面所说的9个要实现的方法，所对应蓝牙交互的主要对应关系：" class="headerlink" title="3. 上面所说的9个要实现的方法，所对应蓝牙交互的主要对应关系："></a>3. 上面所说的9个要实现的方法，所对应蓝牙交互的主要对应关系：</h6><p><img src="http://upload-images.jianshu.io/upload_images/3884117-920dccb532cf4614.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>(1) notification对应onCharacteristicChanged;</p>
+<pre><code>gatt.setCharacteristicNotification(characteristic, true);
+</code></pre><p>该方法一般是在发现服务后，进行设置的，设置该方法的目的是让硬件在数据改变的时候，发送数据给app，app则通过onCharacteristicChanged方法回调给用户，从参数中可获取到回调回来的数据。</p>
+<p>(2) readCharacteristic对应onCharacteristicRead;</p>
+<pre><code>gatt.readCharacteristic(characteristic);
+</code></pre><p>(3) writeCharacteristic对应onCharacteristicWrite;</p>
+<pre><code>gatt.wirteCharacteristic(mCurrentcharacteristic);
+</code></pre><p>(4) 连接蓝牙或者断开蓝牙 对应 onConnectionStateChange;</p>
+<pre><code>bluetoothDevice.connectGatt(this, false, mGattCallback);
+或
+gatt.disconnect();(断开连接后务必记得gatt.close();)
+</code></pre><p>(5) readDescriptor对应onDescriptorRead;</p>
+<pre><code>gatt.readDescriptor(descriptor);
+</code></pre><p>(6) writeDescriptor对应onDescriptorWrite;</p>
+<pre><code>gatt.writeDescriptor(descriptor);
+</code></pre><p>(7) readRemoteRssi对应onReadRemoteRssi;</p>
+<pre><code>gatt.readRemoteRssi();
+</code></pre><p>(8) executeReliableWrite对应onReliableWriteCompleted;</p>
+<pre><code>gatt.executeReliableWrite();
+</code></pre><p>(9) discoverServices对应onServicesDiscovered</p>
+<pre><code>gatt.discoverServices();
+</code></pre><h6 id="开启蓝牙所具备的权限："><a href="#开启蓝牙所具备的权限：" class="headerlink" title="开启蓝牙所具备的权限："></a>开启蓝牙所具备的权限：</h6><pre><code> &lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;/&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot;/&gt;
+&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot;/&gt;
+&lt;uses-feature android:name=&quot;android.hardware.bluetooth_le&quot; android:required=&quot;true&quot;/&gt;
+</code></pre><p>如果 android.hardware.bluetooth_le设置为false,可以安装在不支持的设备上使用，判断是否支持蓝牙4.0用以下代码就可以了，如：</p>
+<pre><code>if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+        Toast.makeText(this, “设备不支持蓝牙4.0”, Toast.LENGTH_SHORT).show();
+        finish();
+  }
+</code></pre><p>对蓝牙的启动关闭操作：</p>
+<p>1、利用系统默认开启蓝牙对话框</p>
+<pre><code>if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+  }
+</code></pre><p>2、后台打开蓝牙，不做任何提示，这个也可以用来自定义打开蓝牙对话框啦</p>
+<pre><code>mBluetoothAdapter.enable();
+</code></pre><p>3、后台关闭蓝牙</p>
+<pre><code>mBluetoothAdapter.disable();
+</code></pre><h4 id="二、BleLib库的优点"><a href="#二、BleLib库的优点" class="headerlink" title="二、BleLib库的优点"></a>二、BleLib库的优点</h4><ul>
+<li><h6 id="最简洁的植入（近乎一行代码）"><a href="#最简洁的植入（近乎一行代码）" class="headerlink" title="最简洁的植入（近乎一行代码）"></a>最简洁的植入（近乎一行代码）</h6><p><img src="http://upload-images.jianshu.io/upload_images/3884117-2fcfb664de0b66c9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/140" alt=""></p>
+<p> mManager = BleManager.getInstance(this);<br> mManager.registerBleListener(mLisenter);</p>
+</li>
+</ul>
+<p>哦！不好意思，说错话了，好像是两行代码哈</p>
+<ul>
+<li><h6 id="最大程度简化了代码量"><a href="#最大程度简化了代码量" class="headerlink" title="最大程度简化了代码量"></a>最大程度简化了代码量</h6></li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/3884117-7dcd4caaf3bd9201.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/140" alt=""></p>
+<p>   有对比才有伤害，那就来看下原生api调用蓝牙流程和该库之间的对比：</p>
+<h6 id="例如扫描设备"><a href="#例如扫描设备" class="headerlink" title="例如扫描设备"></a>例如扫描设备</h6><h6 id="原生API写法："><a href="#原生API写法：" class="headerlink" title="原生API写法："></a>原生API写法：</h6><pre><code>private void scanLeDevice(final boolean enable) {  
+        if (enable) {  
+        // 经过预定扫描期后停止扫描  
+        mHandler.postDelayed(new Runnable() {  
+            @Override  
+            public void run() {  
+                mScanning = false;  
+                mBluetoothAdapter.stopLeScan(mLeScanCallback);  
+            }  
+        }, SCAN_PERIOD);  
+            mScanning = true;  
+            mBluetoothAdapter.startLeScan(mLeScanCallback);  
+        } else {  
+        mScanning = false;  
+        mBluetoothAdapter.stopLeScan(mLeScanCallback);  
+        }  
+        ...  
+    }  
+
+然后在mLeScanCallback的回调中拿到扫描结果：
+
+    // Device scan callback.  
+    private BluetoothAdapter.LeScanCallback mLeScanCallback =  
+        new BluetoothAdapter.LeScanCallback() {  
+    @Override  
+    public void onLeScan(final BluetoothDevice device, int rssi,  
+            byte[] scanRecord) {  
+        runOnUiThread(new Runnable() {  
+           @Override  
+           public void run() {  
+               mLeDeviceListAdapter.addDevice(device);  
+               mLeDeviceListAdapter.notifyDataSetChanged();  
+           }  
+       });  
+    }  
+</code></pre><h6 id="BleLib中扫描的写法："><a href="#BleLib中扫描的写法：" class="headerlink" title="BleLib中扫描的写法："></a>BleLib中扫描的写法：</h6><pre><code>mManager.scanLeDevice(true);
+
+然后在统一管理的BleLisenter的
+    @Override
+    public void onLeScan(final BleDevice device, int rssi, byte[] scanRecord) {
+        ...   
+    }
+回调方法中拿到扫描结果。
+</code></pre><ul>
+<li><h6 id="提供了独一无二的OTA升级接口（即蓝牙硬件进行更新升级的接口）"><a href="#提供了独一无二的OTA升级接口（即蓝牙硬件进行更新升级的接口）" class="headerlink" title="提供了独一无二的OTA升级接口（即蓝牙硬件进行更新升级的接口）"></a>提供了独一无二的OTA升级接口（即蓝牙硬件进行更新升级的接口）</h6></li>
+</ul>
+<pre><code>这绝对是其他蓝牙库所没有的
+</code></pre><ul>
+<li><h6 id="易懂的回调方法"><a href="#易懂的回调方法" class="headerlink" title="易懂的回调方法"></a>易懂的回调方法</h6></li>
+</ul>
+<pre><code>@Override
+public void onStart() {
+    ...
+   //代表开始扫描的回调方法
+}
+
+@Override
+public void onStop() {
+    ...  
+  //代表结束扫描的回调方法
+}
+
+@Override
+public void onLeScan(final BleDevice device, int rssi, byte[] scanRecord) {
+    ...   
+    //代表扫描到设备的回调方法
+}
+
+@Override
+public void onReady(BluetoothDevice device) {
+      ...
+    //代表准备就绪，可以发送数据的回调方法
+    注：连接成功不代表可以立即发送数据（下面会讲解原因）
+}
+
+ @Override
+public void onChanged(BluetoothGattCharacteristic characteristic) {
+    Logger.e(&quot;data===&quot; + Arrays.toString(characteristic.getValue()));
+    //可以选择性实现该方法   不需要则不用实现
+    //代表mcu返回数据的回调方法
+}
+
+...
+</code></pre><ul>
+<li><h6 id="可随意实现自己需要的回调方法"><a href="#可随意实现自己需要的回调方法" class="headerlink" title="可随意实现自己需要的回调方法"></a>可随意实现自己需要的回调方法</h6></li>
+</ul>
+<pre><code>也就是说上面的那些回调方法可以根据自己项目中的需求选择性实现
+</code></pre><h4 id="三、如何使用该库"><a href="#三、如何使用该库" class="headerlink" title="三、如何使用该库"></a>三、如何使用该库</h4><h6 id="1-初始化蓝牙（包含了动态授权蓝牙操作权限、打开蓝牙、判断设备是否支持蓝牙）"><a href="#1-初始化蓝牙（包含了动态授权蓝牙操作权限、打开蓝牙、判断设备是否支持蓝牙）" class="headerlink" title="1. 初始化蓝牙（包含了动态授权蓝牙操作权限、打开蓝牙、判断设备是否支持蓝牙）"></a>1. 初始化蓝牙（包含了动态授权蓝牙操作权限、打开蓝牙、判断设备是否支持蓝牙）</h6><pre><code>   private void initBle() {
+    try {
+        mManager = BleManager.getInstance(this);
+        mManager.registerBleListener(mLisenter);
+        boolean result = false;
+        if (mManager != null) {
+            result = mManager.startService();
+            if (!mManager.isBleEnable()) {//蓝牙未打开
+                mManager.turnOnBlueTooth(this);
+            } else {//已打开
+                requestPermission(new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_COARSE_LOCATION}, getString(R.string.ask_permission), new GrantedResult() {
+                    @Override
+                    public void onResult(boolean granted) {
+                        if (!granted) {
+                            finish();
+                        } else {
+                            //开始扫描
+                            mManager.scanLeDevice(true);
+                        }
+                    }
+                });
+            }
+        }
+        if (!result) {
+            Logger.e(&quot;服务绑定失败&quot;);
+            if (mManager != null) {
+                mManager.startService();
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><p>如果没有打开蓝牙，当点击打开蓝牙的提示框后，会在</p>
+<pre><code>@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+// User chose not to enable Bluetooth.
+if (requestCode == BleManager.REQUEST_ENABLE_BT &amp;&amp; resultCode == Activity.RESULT_CANCELED) {
+    finish();
+    return;
+} else {
+    if (mManager != null) {
+        mManager.scanLeDevice(true);
+    }
+}
+super.onActivityResult(requestCode, resultCode, data);
+}
+</code></pre><p>该方法中收到回调信息，打开后则开启扫描，否则则根据你自己的需要进行操作。</p>
+<h6 id="2-通过注册监听的方式，这里我们可以看到我们把lisenter的实例传进去，那么我们就会在这里得到蓝牙的所有回调监听，从而在此处进行各种操作。如下图（注：下面回调方法大多数都可以根据你的需要选择性实现，不需要可以不用实现）："><a href="#2-通过注册监听的方式，这里我们可以看到我们把lisenter的实例传进去，那么我们就会在这里得到蓝牙的所有回调监听，从而在此处进行各种操作。如下图（注：下面回调方法大多数都可以根据你的需要选择性实现，不需要可以不用实现）：" class="headerlink" title="2.  通过注册监听的方式，这里我们可以看到我们把lisenter的实例传进去，那么我们就会在这里得到蓝牙的所有回调监听，从而在此处进行各种操作。如下图（注：下面回调方法大多数都可以根据你的需要选择性实现，不需要可以不用实现）："></a>2.  通过注册监听的方式，这里我们可以看到我们把lisenter的实例传进去，那么我们就会在这里得到蓝牙的所有回调监听，从而在此处进行各种操作。如下图（注：下面回调方法大多数都可以根据你的需要选择性实现，不需要可以不用实现）：</h6><pre><code>private BleLisenter mLisenter = new BleLisenter() {
+@Override
+public void onStart() {
+    ...
+    //可以选择性实现该方法   不需要则不用实现(以下类同)
+}
+
+@Override
+public void onStop() {
+    ...  
+}
+
+@Override
+public void onConnectTimeOut() {
+    ...
+}
+
+@Override
+public void onLeScan(final BleDevice device, int rssi, byte[] scanRecord) {
+    ...   
+}
+
+@Override
+public void onConnectionChanged(final BleDevice device) {
+     ...
+}
+
+@Override
+public void onServicesDiscovered(BluetoothGatt gatt) {
+      ...
+}
+
+@Override
+public void onReady(BluetoothDevice device) {
+      ...
+}
+
+@Override
+public void onChanged(BluetoothGattCharacteristic characteristic) {
+    Logger.e(&quot;data===&quot; + Arrays.toString(characteristic.getValue()));
+    //可以选择性实现该方法   不需要则不用实现
+    //硬件mcu 返回数据
+}
+
+@Override
+public void onWrite(BluetoothGatt gatt) {
+      ...
+}
+
+@Override
+public void onRead(BluetoothDevice device) {
+     ...
+}
+
+@Override
+public void onDescriptorWriter(BluetoothGatt gatt) {
+     ...
+}
+};
+</code></pre><p>当收到onChanged()回调时,则说明蓝牙设备的数据发生改变了，通知程序作出改变。还有很多回调，他们对应的情况不懂得可以参考上面的原生API的详细讲解。</p>
+<h6 id="3-发送数据到蓝牙设备"><a href="#3-发送数据到蓝牙设备" class="headerlink" title="3. 发送数据到蓝牙设备"></a>3. 发送数据到蓝牙设备</h6><p>这里可以通过调用BleManager中的sendData()方法即可，只需要传入指定的蓝牙设备地址以及需要发送的字节数组即可，返回值是发送成功或者失败的布尔值。</p>
+<h4 id="四、BleLib库封装的详细分析"><a href="#四、BleLib库封装的详细分析" class="headerlink" title="四、BleLib库封装的详细分析"></a>四、BleLib库封装的详细分析</h4><p>分析之前先来张BleLib库API的结构图供大家参考：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3884117-2c5a0b95cda75158.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="BleLib库结构图.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3884117-d4c1ddb8001b53ef.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/240" alt=""></p>
+<h6 id="1、我们先来看一下该库的结构，以及每个类的作用。如下图："><a href="#1、我们先来看一下该库的结构，以及每个类的作用。如下图：" class="headerlink" title="1、我们先来看一下该库的结构，以及每个类的作用。如下图："></a>1、我们先来看一下该库的结构，以及每个类的作用。如下图：</h6><p><img src="http://upload-images.jianshu.io/upload_images/3884117-5257f38f6295fa30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="结构.png"></p>
+<p>这里先不讲解iQppCallback和QppApi两个类，这两个类暂时并未用到，后期维护时会详细讲解。</p>
+<h3 id="BleDevice："><a href="#BleDevice：" class="headerlink" title="BleDevice："></a>BleDevice：</h3><p>该类的主要是来描述并记录蓝牙的属性和状态，如记录蓝牙名称、蓝牙MAC地址、蓝牙别名（即修改之后的名称）、蓝牙连接状态等。</p>
+<h3 id="BleConfig："><a href="#BleConfig：" class="headerlink" title="BleConfig："></a>BleConfig：</h3><p>该类是蓝牙配置类，里面包含了蓝牙服务的UUID、蓝牙特征的UUID、描述的UUID、以及蓝牙状态的静态常量值的标记等等，其中蓝牙相关的UUID的设置是对外提供了接口的，用的时候可以自行传入特定的UUID即可。</p>
+<h3 id="BleLisenter："><a href="#BleLisenter：" class="headerlink" title="BleLisenter："></a>BleLisenter：</h3><p>该类提供了蓝牙各个状态的接口，此处做成了抽象类，目的是为了可以让用户有条件的去实现想要实现的方法，比如说客户想要在蓝牙扫描开始的时候添加一些动画效果，那么你就可以实现onStart()方法，然后在其中做你想做的事情，默认是不需要实现的，如果你想要在蓝牙设备返回数据时做出反应，那就去实现onRead()方法，如果你想在蓝牙连接失败或者超时的情况下去做特殊的处理，你就去实现onError()或者onConnectTimeOut()方法等等。（如果各位有更好的方式可以留言提示，不胜感激）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3884117-38ad19f9b406a6d8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/200" alt=""></p>
+<h3 id="BleManager："><a href="#BleManager：" class="headerlink" title="BleManager："></a>BleManager：</h3><p>该类提供了几乎所有你需要用到的方法，包括蓝牙扫描、连接、断开、蓝牙当前连接状态等等，管理了蓝牙操作的所有接口和方法。</p>
+<h3 id="BluetoothLeService："><a href="#BluetoothLeService：" class="headerlink" title="BluetoothLeService："></a>BluetoothLeService：</h3><p>该类是最重要的一个类，主要是蓝牙操作中用到的各个方法的实现类，是整个蓝牙的核心功能实现，BleManager是对外提供所有蓝牙操作接口的管理类，当BluetoothLeService处理之后要把结果返回到BleManager中，然后再由BleManager对外提供接口，他们之间通过handler进行连接起来，如下：</p>
+<pre><code>private final ServiceConnection mServiceConnection = new ServiceConnection() {
+    @Override
+    public void onServiceConnected(ComponentName componentName,
+                                   IBinder service) {
+        mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+        if(mHandler != null){
+            mBluetoothLeService.setHandler(mHandler);
+        }
+        Log.e(TAG, &quot;Service connection successful&quot;);
+        if (!mBluetoothLeService.initialize()) {
+            Log.e(TAG, &quot;Unable to initialize Bluetooth&quot;);       
+            for (BleLisenter bleLisenter : mBleLisenters){
+                bleLisenter.onInitFailed();
+            }
+        }
+        if (mBluetoothLeService != null) mHandler.sendEmptyMessage(1);
+        // Automatically connects to the device upon successful start-up
+        // initialization.
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName componentName) {
+        mBluetoothLeService = null;
+    }
+};
+</code></pre><p>当BluetoothLeService中处理之后就会通知BleManager去处理状态改变，如下：</p>
+<pre><code>private Handler mHandler = new Handler(Looper.getMainLooper()) {
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+            case BleConfig.BleStatus.ConnectTimeOut:
+                   ...
+                  //此处略去详细代码（下同）
+                break;
+            case BleConfig.BleStatus.ConnectionChanged:
+                   ...
+                break;
+            case BleConfig.BleStatus.Changed:
+                   ...
+                break;
+            case BleConfig.BleStatus.Read:
+                  ...
+                break;
+            case BleConfig.BleStatus.DescriptorWriter:
+                    ...
+                break;
+            case BleConfig.BleStatus.OnReady:
+                    ...
+                break;
+            case BleConfig.BleStatus.ServicesDiscovered:
+                    ...
+                break;
+            case BleConfig.BleStatus.DescriptorRead:
+                    ...
+                break;
+        }
+    }
+};
+</code></pre><p>在此要注意一些细节，比如大多数设备扫描的时候会重复扫描到相同蓝牙设备，必须要进行过滤，开发应用时，必须还要进行产品过滤，比如通过设备的广播包过滤，或者通过设备名过滤都是可以的，如下（注意：要根据自己产品提供的广播包进行过滤，下图是我们自己产品的）：</p>
+<pre><code>  /**
+ * Verify the product broadcast parameters
+ * @param data Parameter data
+ * @return Whether the match
+ */
+public static boolean matchProduct(byte[] data) {
+    if (data == null || data.length &lt;= 0) {
+        return false;
+    }
+    int i = 0;
+    do {
+        // Read packet size
+        int len = data[i++] &amp; 0xff;
+        if (len &gt; 0) {
+            // Read packet data
+            byte[] d = new byte[len];
+            int j = 0;
+            do {
+                d[j++] = data[i++];
+            } while (j &lt; len);
+            // Authentication Type and Length
+            if (d.length &gt; BROADCAST_SPECIFIC_PRODUCT.length &amp;&amp; (d[0] &amp; 0xFF) == BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA) {
+                // Matching product parameters
+                boolean passed = true;
+                for (int x = 0; x &lt; BROADCAST_SPECIFIC_PRODUCT.length; x++) {
+                    passed = passed &amp;&amp; d[x + 1] == BROADCAST_SPECIFIC_PRODUCT[x];
+                }
+                //Match successful
+                if (passed) {
+                    return true;
+                }
+            }
+        }
+
+    } while (i &lt; data.length);
+    return false;
+}
+</code></pre><p> 还有更重要的一个细节就是，在设备添加、移除或者连接状态发生改变时怎么样判断当前蓝牙对象是否是同一个对象（有点拗口），看下图：</p>
+<pre><code>T device = null;
+try {
+     device = mBleFactory.create(BleManager.this,(BluetoothDevice) msg.obj);
+     }catch (Exception e) {
+     e.printStackTrace();
+ }
+</code></pre><p>可以看到mBleFactory.create(BleManager.this,(BluetoothDevice) msg.obj)返回了一个蓝牙对象，该方法最基本的实现如下：</p>
+<pre><code>public T getBleDevice(BluetoothDevice device) {
+    if (device == null) {
+        return null;
+    }
+    synchronized (mConnetedDevices){
+        if(mConnetedDevices.size() &gt; 0){
+            for (T bleDevice : mConnetedDevices) {
+                if (bleDevice.getBleAddress().equals(device.getAddress())) {
+                    return bleDevice;
+                }
+            }
+        }
+        T newDevice = (T) new BleDevice(device);
+        return newDevice;
+    }
+}
+</code></pre><p>这里就是判断当前已连接的蓝牙设备的集合中是否存在该设备，如果有直接返回该对象，如果没有则新创建一个蓝牙对象。</p>
+<p>当设备连接成功之后并不代表就可以在此时发送数据，因为此时只是连接成功，并没有获取到蓝牙服务。必须要先通过gatt对象去获取服务discoverServices()在可以。如果想让APP内能够实时监听到蓝牙设备发来的数据，则还需要设置一个通知（可以理解成注册监听吧）如下：</p>
+<pre><code>@Override
+    public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            mHandler.obtainMessage(BleConfig.BleStatus.ServicesDiscovered, gatt).sendToTarget();
+            //清空通知特性列表
+            mNotifyCharacteristics.clear();
+            mNotifyIndex = 0;
+            //开始设置通知特性
+            displayGattServices(gatt.getDevice().getAddress(), getSupportedGattServices(gatt.getDevice().getAddress()));
+        } else {
+            Log.w(TAG, &quot;onServicesDiscovered received: &quot; + status);
+        }
+    }
+</code></pre><p> 这里对几个重要的回调做解读，当我们收到onLeScan()回调时，则说明已经扫描到设备，只需要加入到你的设备列表中即可，当收到onConnectionChanged()方法时，说明蓝牙连接状态已经改变，则只需要判断BleDevice的状态即可，当收到onServicesDiscovered()回调时，说明已经搜索到蓝牙服务，这时可以根据自己的需求去设置通知Notify，如下图：</p>
+<pre><code>//设置通知数组
+private void displayGattServices(final String address, List&lt;BluetoothGattService&gt; gattServices) {
+if (gattServices == null)
+    return;
+String uuid = null;
+// Loops through available GATT Services.
+for (BluetoothGattService gattService : gattServices) {
+    uuid = gattService.getUuid().toString();
+    Log.d(TAG, &quot;displayGattServices: &quot; + uuid);
+    if (uuid.equals(BleConfig.UUID_SERVICE_TEXT)) {
+        Log.d(TAG, &quot;service_uuid: &quot; + uuid);
+        List&lt;BluetoothGattCharacteristic&gt; gattCharacteristics = gattService.getCharacteristics();
+        for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+            uuid = gattCharacteristic.getUuid().toString();
+            if (uuid.equals(BleConfig.UUID_CHARACTERISTIC_TEXT)) {
+                Log.e(&quot;mWriteCharacteristic&quot;, uuid);
+                mWriteCharacteristicMap.put(address,gattCharacteristic);
+                //通知特性
+            } else if (gattCharacteristic.getProperties() == BluetoothGattCharacteristic.PROPERTY_NOTIFY) {
+                mNotifyCharacteristics.add(gattCharacteristic);
+                Log.e(&quot;mNotifyCharacteristics&quot;, &quot;PROPERTY_NOTIFY&quot;);
+            }
+        }
+        //真正设置通知
+        if (mNotifyCharacteristics != null &amp;&amp; mNotifyCharacteristics.size() &gt; 0) {
+            Log.e(&quot;setCharaNotification&quot;, &quot;setCharaNotification&quot;);
+            setCharacteristicNotification(address, mNotifyCharacteristics.get(mNotifyIndex++), true);
+        }
+    }
+  }
+}
+</code></pre><p>根据服务的UUID来进行过滤，然后根据服务获取到特征的UUID，然后在进行过滤，然后再从特征中取出通知的UUID，这时设置通知为true就可以了。</p>
+<p>新更新的OTA升级模块的接口还没有介绍，大家感兴趣可以去下载源码自己去查看，OK，要注意的细节问题已经介绍的差不多了，如果感兴趣的朋友可以去应用该库到自己的项目中。文章末尾顺带宣传下自己的一个Android开发的各种学习DEMO的一个仓库（包含了蓝牙3.0基于A2DP协议、Aidl、BlockingQueue、设计模式、IPC、移植Libmp3库到Android平台并编写jni方法供Java层调用、MVP框架、Socket学习demo等等），感兴趣可以关注并Star下哦，不胜感激，<a href="https://github.com/AI-Curry/AndroidData" target="_blank" rel="noopener">https://github.com/AI-Curry/AndroidData</a></p>
+<h3 id="重中之重：附BleLib库下载地址"><a href="#重中之重：附BleLib库下载地址" class="headerlink" title="重中之重：附BleLib库下载地址"></a>重中之重：<a href="https://github.com/Alex-Jerry/BleDemo" target="_blank" rel="noopener">附BleLib库下载地址</a></h3>
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Alex-Jerry/" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2018 Alex Jerry<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
