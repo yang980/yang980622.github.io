@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/favicon.png">
 
 
-<title>归档集- 2018/2 - Hexo</title>
+<title>php计算时间，统计图表 - Hexo</title>
 
 <meta name="keywords" content="">
 
@@ -102,8 +102,10 @@
 </div>
             <div class="page-title">
     <ul>
-        <li><a href="/" data-name="首页" title="Back Home">首页</a></li>
-        <li><a href="/tags" data-name="标签云" title="标签云">标签</a></li>
+        <li><a href="/">最新</a></li>
+        
+        
+        
         <li class="page-search">
     <form id="search" class="search-form">
         <label for="s" class="sr-only">请输入关键字</label>
@@ -145,33 +147,170 @@
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <h3 class="post-title">坦率的讲 - 本站目前共计1篇文章</h3>
-        </div>
-        <p><img src="/images/category-bg.jpg" alt="category-bg"></p>
-        <div class="post-content markdown-body" itemprop="articleBody">
-            <div class="archives">
-                
-                
-                
-                
-                
-                <div class="archives-item">
-                    <h2>2018年02月</h2>
-                    <ul class="archives_list">
-                        
-                        <li>05日10:27:20
-                            <a href="/2018/02/05/PHP计算时间，统计图表/">PHP计算时间，统计图表</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-                
-                
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-05">2018-02-05</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">PHP计算时间，统计图表</h2>
+            <div class="post-meta">
+                本文总共4366个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
-    </article>
-</div>
+        <div class="post-content markdown-body">
+            <hr>
+<p><strong>前言</strong><br><strong><em>因为公司有多个APP,需求计算出每个APP的安装量，在图表中显示出来</em></strong><br>首先查出数据,这里借用下ThinkPHP5.0的语法</p>
+<pre><code>$data   = db(&quot;table&quot;) -&gt; select();
+$start = current($data)[&quot;add_time&quot;];//需要查询的开始时间
+$end   = end($data)[&quot;add_time&quot;];//需要查询的结束时间
+$difference = ($start-$end)/86400;//计算天数
+//如果是0天或者不是整数，为浮点数就加一
+if($difference == 0 || !is_int($difference)){
+    $difference = $difference+1;
+}
+//注意你的时间如果是时间戳，便转为Y-m-d的格式，这里区分年，月，日函数
+    $androidNum     = 0;//计算android下载总量
+    $iosNum         = 0;//计算ios下载总量
+    foreach ($data as $key =&gt; &amp;$value) {
+        $value[&quot;add_time&quot;] = date(&quot;Y-m-d&quot;, $value[&quot;add_time&quot;]);//我这里是时间戳，转为Y-m-d格式
+        if($value[&quot;system&quot;] == &quot;android&quot;){
+            $androidNum++;
+        }
+        if($value[&quot;system&quot;] == &quot;IOS&quot;){
+            $iosNum++;
+        }
+    }
 
+$info = yearMonthDay($data,$difference);//转换函数，第一个参数为数据，第二个参数为开始时间与结束时间相差天数
+</code></pre><p>下面的便是函数了</p>
+<pre><code> function yearMonthDay($data,$difference){
+    //判断数据是否正确
+    if(!is_array($data) || empty($difference)) {
+       return json([&quot;status&quot; =&gt; &quot;1&quot;, &quot;msg&quot; =&gt; &quot;请传入正确的参数&quot;, &quot;data&quot; =&gt; &quot;&quot;]);
+    }
+
+  //设置一个空数组$info存储数据
+  $info  = array();
+
+  //遍历$data
+  foreach($data as $key =&gt; $value){
+      //判断$difference为多少天，并取出时间值
+      //小于十天就以天为单位（这里查询十条数据，所以就以月、日*10）
+      if($difference&lt;=10){
+          $current = $data[$key][&quot;add_time&quot;];
+      }elseif($difference&gt;10 &amp;&amp; $difference&lt;=300){
+          $current = substr($data[$key][&quot;add_time&quot;],0, 7);//按月份计算，截取2015-10-01的前7位，也就是年月相同
+      }elseif($difference&gt;300){
+          $current = $current = substr($data[$key][&quot;add_time&quot;],0, 4);//按年份计算
+      }else{
+          $current = &quot;&quot;;
+      }
+      //再次进行循环
+      foreach($data as $k =&gt; $v){
+          //取出这层循环的时间值
+          if($difference&gt;10 &amp;&amp; $difference&lt;=300){
+            $next = substr($data[$k][&quot;add_time&quot;],0, 7);
+          }elseif($difference&gt;300){
+            $next = substr($data[$k][&quot;add_time&quot;],0, 4);
+          }elseif($difference&lt;=10){
+            $next = $data[$k][&quot;add_time&quot;];
+          }else{
+            $next = &quot;&quot;;
+          }
+          //拿出外层循环出的一条数据和内层循环的所有数据进行比较
+          if($current == $next){
+             //如果相同，就放到一个数组中去
+            $info[$key][]  = $v;
+            unset($data[$k]);
+          }else{
+              //否则跳出循环
+              //因为最后一条数据，如果都不相同的话，会直接跳出循环，所以我们判断如果只有一条数据，就存下它
+              if(count($data) == 1){
+                $info[][] = $v;
+              }
+              break;
+         }
+      }
+  }
+
+  //$info是把所有数据按照年、月、日重新排序了一下,接下来我们统计下载量
+  //$data现在已经用不到了，所以我初始化一下他，就相当于重新定义一个数组；
+  $data  = array();
+  //循环新数组$info
+  foreach($info as $key =&gt; $value){
+      //因为上边只是排序了数组，并没有改变数组，所以我们还要判断一下
+      if($difference&gt;10 &amp;&amp; $difference&lt;=300){
+          $data[$key][&quot;year&quot;]   = substr(current($value)[&quot;add_time&quot;], 0, 7);
+      }elseif($difference&gt;300){
+          $data[$key][&quot;year&quot;]   = substr(current($value)[&quot;add_time&quot;], 0, 4);
+      }else{
+          $data[$key][&quot;year&quot;]   = current($value)[&quot;add_time&quot;];
+      }
+
+      //计算出每个时间段的总数量
+      $data[$key][&quot;value&quot;]       = count($value);
+      //计算android与ios每个时间段的下载数量
+      foreach ($value as $v){
+          if($v[&quot;system&quot;] == &quot;android&quot;){
+              $android[] = $v;
+          }
+          if($v[&quot;system&quot;] == &quot;IOS&quot;){
+              $IOS[] = $v;
+          }
+      }
+      $data[$key][&quot;android&quot;]  = count($android);
+      $data[$key][&quot;ios&quot;]       = count($IOS);
+    }
+
+  return $data;
+}
+</code></pre><p>返回数据例子：</p>
+<pre><code>array (size=3)
+0 =&gt; 
+  array (size=4)
+    &apos;year&apos; =&gt; string &apos;2019-10&apos; (length=7)
+    &apos;value&apos; =&gt; int 1
+    &apos;android&apos; =&gt; int 0
+    &apos;ios&apos; =&gt; int 1
+1 =&gt; 
+  array (size=4)
+    &apos;year&apos; =&gt; string &apos;2018-07&apos; (length=7)
+    &apos;value&apos; =&gt; int 1
+    &apos;android&apos; =&gt; int 0
+    &apos;ios&apos; =&gt; int 1
+2 =&gt; 
+  array (size=4)
+    &apos;year&apos; =&gt; string &apos;2018-06&apos; (length=7)
+    &apos;value&apos; =&gt; int 1
+    &apos;android&apos; =&gt; int 0
+    &apos;ios&apos; =&gt; int 1
+</code></pre><p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/PHP/">PHP</a>
+            
+        </div>
+        
+    </article>
+    
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+</div>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">
