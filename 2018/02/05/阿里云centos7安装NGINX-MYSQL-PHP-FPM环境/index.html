@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
+<!--
+//                            _ooOoo_
+//                           o8888888o
+//                           88" . "88
+//                           (| -_- |)
+//                            O\ = /O
+//                        ____/`---'\____
+//                      .   ' \\| |// `.
+//                       / \\||| : |||// \
+//                     / _||||| -:- |||||- \
+//                       | | \\\ - /// | |
+//                     | \_| ''\---/'' | |
+//                      \ .-\__ `-` ___/-. /
+//                   ___`. .' /--.--\ `. . __
+//                ."" '< `.___\_<|>_/___.' >'"".
+//               | | : `- \`.;`\ _ /`;.`/ - ` : | |
+//                 \ \ `-. \_ __\ /__ _/ .-` / /
+//         ======`-.____`-.___\_____/___.-`____.-'======
+//                            `=---='
+//                 拦截插件累计拦截逗比攻击"1381438"次！
+//         .............................................
+//                  佛祖保佑             永无BUG
+//          佛曰:
+//                  写字楼里写字间，写字间里程序员；
+//                  程序人员写程序，又拿程序换酒钱。
+//                  酒醒只在网上坐，酒醉还来网下眠；
+//                  酒醉酒醒日复日，网上网下年复年。
+//                  但愿老死电脑间，不愿鞠躬老板前；
+//                  奔驰宝马贵者趣，公交自行程序员。
+//                  别人笑我忒疯癫，我笑自己命太贱；
+//                  不见满街漂亮妹，哪个归得程序员？
+-->
+<head>
+    <!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0;url=http://yoursite.com/warn.html">
+<![endif]-->
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<meta http-equiv="mobile-agent" content="format=html5; url=http://yoursite.com">
+<meta name="author" content="阳阳">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/SimpleStyle.min.css">
+
+<link rel="shortcut icon" href="/images/yangyang.png">
+
+
+<title>阿里云centos7安装nginx+mysql+php-fpm环境 - 阳阳</title>
+
+<meta name="keywords" content="">
+
+<meta name="description " content="">
+</head>
+<body>
+<div id="nav">
+    <nav class="nav-menu">
+        <a class="site-name current" href="/" title="说">说</a>
+        <a class="site-index current" href="/"><i class="fa fa-home"></i><span>首页</span></a>
+        <a href="/archives" title="归档"><i class="fa fa-archives"></i><span>归档</span></a>
+        <a href="/tags" title="标签"><i class="fa fa-tags"></i><span>标签</span></a>
+        <!-- custom single page of menus -->
+        
+        
+        <a href="/help" title="帮助">
+            <i class="fa fa-question-circle"></i>
+            <span>帮助</span>
+        </a>
+        
+    </nav>
+</div>
+
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-sns-qr" href="javascript:"><i class="fa fa-telegram"></i></a>
+</div>
+
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+            <div id="cover">
+    <div class="cover-img"></div>
+    <div class="cover-info">
+        
+        <h1 class="cover-siteName">说IT</h1>
+        <h3 class="cover-siteTitle">做产品，写代码</h3>
+        <p class="cover-siteDesc">一个关注技术与人文的IT博客</p>
+        <div class="cover-sns">
+            
+            <div class="btn btn-github">
+                <a href="https://github.com/yang980622" target="_blank" title="github" ref="friend">
+                    <i class="fa fa-github"></i>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+            <div class="page-title">
+    <ul>
+        <li><a href="/">最新</a></li>
+        
+        
+        
+        <li class="page-search">
+    <form id="search" class="search-form">
+        <label for="s" class="sr-only">请输入关键字</label>
+        <input class="search-field" type="text" name="s" class="text" placeholder="请输入关键字" />
+        <button type="submit" class="search-form-submit" title="搜索"><i class="fa fa-search"></i></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+</li>
+
+    </ul>
+</div>
+<div class="main-inner">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-05">2018-02-05</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">阿里云centos7安装NGINX+MYSQL+PHP-FPM环境</h2>
+            <div class="post-meta">
+                本文总共6335个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <p>##前言<br><strong>LIUNX服务器部署，百度找的资料有些都是老的。查了一些资料顺便整合了一下，阿里云服务器（ECS）可以选择多种操作系统，打算用它运行Drupal或者WordPress，你最好选择Liunx系统，这篇文章的演示是基于阿里云的CentOS操作系统的服务器，在上面搭建LEMP的环境。</strong><br><strong>那就。。。。。。开始啦！！！~~~~</strong></p>
+<p>#####创建服务器实例<br>创建一个服务器实例其实就是去购买一台相应配置的云服务器。注册并登录到阿里云的网站，在 产品服务 里选择 云服务器 ECS ，点击页面上的 立即购买。可以 包年包月 的购买，也可以 按量付费，也就是用多少花多少，不过这种方式不支持网站的备案。</p>
+<p>确定后，可以按需要去配置服务器，建议最初可以选择最低配置，因为后续升级也非常容易。选择 CPU，内存，带宽，不同的配置价格不同。你还要选择 地域 ，也就是云服务器所在的地方，目前只有 青岛 与 杭州。再去选择操作系统，这篇文章所做的测试用的是 CentOS 6.3 64 位。需要的话可以再增加一块数据盘，默认会带一个系统盘，一共 20 G ，足够我们测试用了。<br><strong>现在推荐使用 CentOS 7 64 位。</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7866960-a88c65955f504e56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/860" alt="aliyun-05.png"><br>点击 <strong>立即购买</strong>，预览一下所选的服务器，然后 <strong>提交订单</strong>。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7866960-fc6086508d0d2a13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/860" alt="aliyun-01.png"></p>
+<p>选择支付方式，然后点击 <strong>确认支付</strong>。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7866960-54c6c4d0a7ea6a2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/860" alt="aliyun-02.png"></p>
+<p>注意支付以后，可能会等一小会儿订单才能生效。至少我是等了一会儿，也可能是因为我用的手机版的支付宝。支付成功以后，打开你的个人账户页面，选择 管理控制台，在这里，你可以找到购买的云服务器。云服务器默认的 <strong>root（超级管理员）</strong> 用户的密码，会发送到你的手机上，你也可以点击 <strong>修改密码</strong>，去修改 root 用户密码。</p>
+<p>在这个界面，你还可以 <strong>停止</strong>  或 <strong>重启</strong> 去服务器。也可以找到你的服务器的公众的 IP 地址。我购买的这台服务器地址是 218.244.147.196，使用这个地址配合 root 用户和密码，你可以使用工具登录到服务器，对它进行远程管理，比如安装软件，<strong>修改设置</strong>，重启服务等等。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7866960-901a05f8c4ef1a29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="aliyun"></p>
+<p>####远程控制你的服务器<br>远程控制 Linux 类型的系统的服务器，比如 CentOS 系统的服务器，一般不像 Windows 服务器那样，使用图形界面的远程控制。我们需要使用命令行工具，远程连接到服务器，然后使用命令去控制服务器。Windows 用户可以使用 <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" target="_blank" rel="noopener">Putty </a>，Mac 用户可以使用系统自带的终端工具。然后用 ssh 命令，连接到你的服务器。像这样：</p>
+<pre><code>ssh root@218.244.147.196
+</code></pre><p>@ 左边的 root 是连接时使用的用户的名字，@ 右边的数字是你的服务器的 IP 地址。这行命令的意思就是，使用 root 用户，登录到 218.244.147.196 这台服务器上。回车以后，会提示你输入 root 用户的密码（这个密码阿里云会发送到你手机上）。</p>
+<p>####添加新用户并分配 Root 权限<br>为了安全，我们可以单独创建一个平时操作服务器的用户，并且给这个用户分配可以使用 Root 的权限，也就是如果需要 Root 权限，可以在命令的前面加上 sudo 获取到 Root 用户的权限。</p>
+<p><strong>添加新用户</strong><br>比如添加一个名字是 wanghao 的用户，可以这样：</p>
+<pre><code>adduser niexiangyang 
+</code></pre><p><strong>设置密码</strong><br>为用户设置密码：</p>
+<pre><code>passwd niexiangyang 
+</code></pre><p><strong>分配Root权限</strong><br>让我们新创建的用户拥有 Root 用户的权限，执行:</p>
+<pre><code>gpasswd -a niexiangyang wheel
+</code></pre><p>把 niexiangyang这个用户名换成你自己的用户名。</p>
+<p><strong>用新用户登录服务器</strong></p>
+<pre><code>ssh niexiangyang@218.244.147.196
+</code></pre><p><strong>仓库</strong><br>为了可以使用 CentOS 系统的包管理工具去安装更多的东西，我们需要单独安装一些额外的软件仓库。</p>
+<p>EPEL</p>
+<pre><code>sudo yum install epel-release -y
+</code></pre><p>IUS</p>
+<pre><code>sudo yum install https://centos7.iuscommunity.org/ius-release.rpm -y
+</code></pre><p>IUS 仓库里面有我们需要的一些新的软件包，比如 PHP 7。注意我们安装的是为 CentOS  7 这个系统准备的 IUS 仓库，如果你的系统是 CentOS 6，你需要到 IUS 网站上去查找适合的仓库的下载地址。</p>
+<p><strong>现在开始安装环境啦！！！~~~</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7866960-589b5fee2dddc2f5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/320" alt="timg (3).jpg"></p>
+<p>####安装NGINX<br>NGINX 这个软件包已经包装在 EPEL 仓库里了，之前我们已经安装了这个仓库，所以可以直接使用包管理工具去安装 NGINX。</p>
+<pre><code>sudo yum install nginx -y
+</code></pre><p><strong>启动</strong></p>
+<pre><code>sudo systemctl start nginx
+</code></pre><p><strong>开机自启动</strong></p>
+<pre><code>sudo systemctl enable nginx
+</code></pre><p>服务启动以后，你就可以在浏览器上使用服务器的 IP 地址，或者指向这个地址的域名访问服务器指定的目录了。你会看到类似下面的这些文字。</p>
+<pre><code>Welcome to nginx! If you see this page, the nginx web server is successfully installed and working. Further configuration is required. For online documentation and support please refer to nginx.org. Commercial support is available at nginx.com. Thank you for using nginx.
+</code></pre><p><strong>配置 nginx 虚拟主机</strong><br>安装完 nginx 以后，第一件想到的事应该就是去创建虚拟主机，虚拟主机允许我们在同一台服务器上运行多个网站，我们可以为不同的域名绑定不同的目录，访问这个域名的时候，会打开对应目录里面的东西。之前介绍过为 <a href="https://ninghao.net/blog/1293" target="_blank" rel="noopener">Apache 服务器创建虚拟主机</a>，下面来看一下为 nginx 配置虚拟主机。先进入到 nginx 配置文件目录：</p>
+<pre><code>cd /etc/nginx/conf.d
+</code></pre><p>创建一个新的配置文件，比如我要为 nginx.ninghao.net 这个主机名创建一个虚拟主机，可以这样：</p>
+<pre><code>vim nginx.ninghao.net.conf
+</code></pre><p>把下面的配置代码放到这个配置文件里：</p>
+<pre><code>server {
+    listen        80;
+    server_name   nginx.ninghao.net;
+    root          /home/www/nginx.ninghao.net;
+    index         index.php index.html;
+
+    location / {
+      try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_index index.php;
+    include fastcgi.conf;
+    }
+}
+</code></pre><p>上面这个配置文件支持一些的 PHP 应用，比如 WordPress，Drupal，Laravel。第一个 location 区块可以让 PHP 应用支持地址的重写功能，第二个 Location 设置了让虚拟主机可以去处理 PHP 的请求。注意这里用了 include 命令，包含进来一个 fastcgi.conf 文件，你要确定这个文件存在。</p>
+<p>你也可能会找到 fastcgi_params 这个文件，如果没有 fastcgi.conf 就把 fastcgi_params 这个文件包含进来，并且在处理 php 的那个 location 区块里再添加一条配置：</p>
+<pre><code>fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+</code></pre><p>server_name 就是主机名，也就是跟这个虚拟主机绑定在一块儿的域名，我事先把 nginx.ninghao.net 指向了服务器，这个虚拟主机就是为它准备的，所以，server_name 后面的东西就是 nginx.ninghao.net 。紧接着 server_name 下面可以是一个 root，就是这个虚拟主机的根目录，也就是网站所在的目录。比如我们要把 nginx.ninghao.net 这个网站的文件放在 /home/www/nginx.ninghao.net 下面，那么这个 root 就是这个路径。</p>
+<p>然后去掉 location / 里面的 root 这行代码。再在 index 后面加上一种索引文件名，也就是默认打开的文件，这里要加上一个 index.php ，这样访问 nginx.ninghao.net 就可以直接打开 root 目录下面的 index.php 了。稍后我们再去安装 php 。</p>
+<p>保存一下，按 esc ，输入 :wp（保存并退出）。现在虚拟主机应该就可以使用了。主机的域名是 nginx.ninghao.net，访问它的时候，打开的是 /home/www/nginx.ninghao.net 这个目录里面的东西，你可以在这个目录下放点东西。</p>
+<p>重启 nginx 或者重新加载 nginx 可以让配置文件生效。</p>
+<pre><code>sudo systemctl reload nginx
+</code></pre><p>现在，打开浏览器，输入你为虚拟主机设置的域名，看看是否能打开你指定的目录里的东西。</p>
+<p>####PHP<br>要让 nginx 能够执行 php 文件，需要去安装一下 <a href="http://php-fpm.org/" target="_blank" rel="noopener">php-fpm</a>，我要安装的是比较新的 PHP 7 ，这个软件包可以在 IUS 仓库里找到，所以你需要先安装 IUS 仓库。</p>
+<pre><code>sudo yum install php70u-fpm -y
+</code></pre><p><strong>启动</strong></p>
+<pre><code>sudo systemctl start php-fpm
+</code></pre><p><strong>开启自启动</strong></p>
+<pre><code>sudo systemctl enable php-fpm
+</code></pre><p><strong>安装PHP扩展</strong><br>为了可以正常运行一般的 PHP 应用，你需要再安装一些其它的 PHP 扩展，通常你在安装 PHP 应用，比如 WordPress，Drupal，Laravel 的时候，都会提示你缺少的 PHP 扩展。下面是一些常用的 PHP 扩展：</p>
+<pre><code>sudo yum install php70u-gd  php70u-mysqlnd php70u-pdo php70u-mcrypt php70u-mbstring php70u-json php70u-opcache php70u-xml -y
+</code></pre><p> <strong>重新加载 PHP-FPM</strong></p>
+<pre><code>sudo systemctl reload php-fpm
+</code></pre><p><strong>测试是否可以执行 php</strong><br>现在，我们已经安装了 php-fpm，并修改了 nginx 的配置文件让它可以去执行 php，下面，我们得去测试一下，可以使用 php 的 phpinfo(); 函数，方法是在你的虚拟主机根目录下面，创建一个 php 文件，命名为 phpinfo.php，然后在这个文件里输入：</p>
+<pre><code>&lt;?php phpinfo(); ?&gt;
+</code></pre><p>保存文件并退出。在浏览器里打开刚才创建的这个 php 文件。我这里应该是 <em><a href="http://nginx.ninghao.net/phpinfo.php" target="_blank" rel="noopener">http://nginx.ninghao.net/phpinfo.php</a></em>。打开以后，你应该能看到像下面这样的界面，如果能，说明 nginx 已经可以执行 php 了。</p>
+<p>####安装 MySQL / MariaDB<br>MySQL 与 MariaDB 是相互兼容的，现在社区推荐使用 MariaDB，所以我们可以去安装一下 MariaDB ，用它代替 MySQL 。</p>
+<pre><code>sudo yum install mariadb101u-server -y
+</code></pre><p>如果出现冲突的提示，是因为系统本身自带 MariaDB，我们需要先删除掉系统本身带的，才能正常安装比较新的。一般可以这样来删除：</p>
+<pre><code>sudo yum remove mariadb-libs -y
+</code></pre><p><strong>启动</strong></p>
+<pre><code>sudo systemctl start mariadb
+</code></pre><p><strong>开机自启动</strong></p>
+<pre><code>sudo systemctl enable mariadb
+</code></pre><p><strong>安全配置</strong><br>然后我们需要简单配置一下 mysql ，默认安装以后 mysql 的 root 用户是没有密码的，对于生产环境来说，这肯定是不行的，另外还有一些安全相关的设置，可以使用下面这行命令去配置一下，它是一个向导，问你一些问题，你要给出答案，比如是否要设置 root 用户的密码， 密码是什么等等。</p>
+<pre><code>mysql_secure_installation
+</code></pre><p>Enter current password for root (enter for none):<br>解释：输入当前 root 用户密码，默认为空，直接回车。<br>Set root password? [Y/n]  y<br>解释：要设置 root 密码吗？输入 y 表示愿意。<br>Remove anonymous users? [Y/n]  y<br>解释：要移除掉匿名用户吗？输入 y 表示愿意。<br>Disallow root login remotely? [Y/n]  y<br>解释：不想让 root 远程登陆吗？输入 y 表示愿意。<br>Remove test database and access to it? [Y/n]  y<br>解释：要去掉 test 数据库吗？输入 y 表示愿意。<br>Reload privilege tables now? [Y/n]  y<br>解释：想要重新加载权限吗？输入 y 表示愿意。</p>
+<p><strong>目录与文件的权限问题</strong><br>网站上面有些目录或文件需要有写入权限，这样你得为这些目录和文件分配合适的权限，一般可以把它们的拥有者设置成 php-fpm 使用的用户，查看一下谁在运行 php-fpm 这个服务：</p>
+<pre><code>sudo ps aux|grep php
+</code></pre><p>修改所使用的用户，php-fpm 的配置文件是：<em>/etc/php-fpm.conf</em>，还有在 <em>/etc/php-fpm.d/** 这个目录里的所有文件都是 php-fpm 的配置文件。默认这个目录里有一个 </em><a href="http://www.conf/" target="_blank" rel="noopener">www.conf</a><em> ，你可以编辑这个文件来修改 php-fpm 所使用的用户名称。使用 </em>vim* 命令：</p>
+<pre><code>vim /etc/php-fpm.d/www.conf
+</code></pre><p>打开文件以后你可以搜索下关键词 user ，输入 :/user  ，会搜索到结果，按小 n 可以继续向下查找，按大 N 可以向上查找。直到你看到：</p>
+<pre><code>user = php-fpm
+</code></pre><p>这个 php-fpm 就是运行 PHP-FPM 的用户的名字，你看到的也可能是其它的名字，这不重要。你只要知道这个用户是谁，在哪里可以修改这个用户就行了。在遇到目录写入权限的问题，比如不能正常上传网站的文件，你可以把保存上传文件的那个目录的拥有者修改成运行 PHP-FPM 的用户就可以了。</p>
+<p>修改目录的拥有者可以使用这样的命名：</p>
+<pre><code>sudo chown -R 用户名 目录
+</code></pre><p>这样就会把指定的目录的拥有者修改成指定的用户了。也就是如果你把目录的拥有者修改成运行 PHP-FPM 的那个用户，那么在网站上再去上传文件就不会有权限的问题了，因为目录的拥有者一般都会拥有可以写入的权限。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7866960-34a8dd0d1d7c0e55.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="timg (4).jpg"></p>
+<p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/LIUNX/">LIUNX</a>
+            
+        </div>
+        
+    </article>
+    
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+</div>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <footer class="footer">
+    <div class="footer-inner">
+        <p>
+            <a href="/about"  title="关于本站">关于本站</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <!-- 自定义链接 -->
+            <a href="/help" title="help" >急救中心</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/links" title="友情链接">友情链接</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/app" title="App下载">App下载</a>
+        </p>
+        <p>
+            本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>，已建立<a href="/timeline" id="siteBuildingTime"></a>天<br/>
+            ©2017 基于<a href="http://hexo.io" target="_blank">Hexo</a>搭建
+            ，主题&nbsp<a href="https://github.com/tangkunyin/hexo-theme-jsimple" target="_blank">JSimple</a>
+            ，作者<a href="https://www.tangkunyin.com" target="_blank">唐先森</a>
+            ，Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>
+        </p>
+        
+
+    </div>
+</footer>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="/js/InsightSearch.js"></script>
+<script src="/js/SimpleCore.js"></script>
+
+</div>
+<div class="fixed-btn">
+    <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
+</div>
+<script>
+    $(function () {
+        SimpleCore.init({
+            buildingTime: '01/20/2018',
+            current: $('.post-tags').length > 0 ? 'post' : 'archive',
+            snsQRCode: '/images/sns-qrcode.png',
+            donateImg: '/images/donate-qr.png',
+        });
+    });
+</script>
+</body>
+</html>

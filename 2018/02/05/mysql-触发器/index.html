@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/yangyang.png">
 
 
-<title>标签 - php - 阳阳</title>
+<title>mysql 触发器 - 阳阳</title>
 
 <meta name="keywords" content="">
 
@@ -102,25 +102,9 @@
 </div>
             <div class="page-title">
     <ul>
-        <li class="">
-            <a href="/" data-name="最近文章">最近</a>
-        </li>
+        <li><a href="/">最新</a></li>
         
-        <li class="">
-            <a href="/categories/big-front-end" data-name="前端">前端</a>
-        </li>
         
-        <li class="">
-            <a href="/categories/server-side" data-name="后台">后台</a>
-        </li>
-        
-        <li class="">
-            <a href="/categories/design" data-name="设计">设计</a>
-        </li>
-        
-        <li class="">
-            <a href="/categories/resource" data-name="资源">资源</a>
-        </li>
         
         <li class="page-search">
     <form id="search" class="search-form">
@@ -161,93 +145,88 @@
     </ul>
 </div>
 <div class="main-inner">
-    
-    
-    
-<article class="post">
-    
-    <div class="post-header">
-        <div class="post-meta">
-            <a href="" target="_blank">
-                <strong></strong>
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-05">2018-02-05</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">mysql 触发器</h2>
+            <div class="post-meta">
+                本文总共1470个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <hr>
+<p><strong>语法</strong></p>
+<pre><code>CREATE TRIGGER :(触发器名称) --触发器必须有名字，最多64个字符，可能后面会附有分隔符。它和MySQL中其他对象的明明方式基本相像。
+BEFORE|ARIER   :--触发器有执行的时间设置：可设置为事件发生前后
+INSERT|UPDATE|DELETE --同样也能设置触发的事件：它们可以在执行insert,uodate,或deleet的过程中触发。
+ON             :（表名称）--触发器是属于某一个表的：挡在这个表上执行插入、更新或删除操作的时候就导致触发器的激活，我们不能给同一张表的同一个时间安排两个触发器。
+FOR EACH ROW   :--触发器执行间隔 : FOR EACH ROW 子句通知触发器 每隔一行执行一次动作，而不是对整个表执行一次。
+</code></pre><p>（触发器SQL语句）–触发器包含索要触发的SQL语句：这里的语句可以是任何合法的语句，也包含符合语句，但是这里的语句收的限制和函数的一样。</p>
+<p>–你必须拥有相当大的权限才能创建触发器（CREATE TRIGGER）,如果你已经是ROOT用户了，那么久足够了。这跟SQL的标准有所不同。</p>
+<p><strong>实例</strong><br><strong>创建表tab1</strong></p>
+<pre><code>DROP TABLE IF EXISTE tab1;
+CREATE TABLE tab1(tab1_id vachar(11));
+</code></pre><p><strong>创建表tab2</strong></p>
+<pre><code>DROP TABLE IF EXISTE tab2;
+CREATE TABLE tab1(tab2_id vachar(11));
+</code></pre><p><strong>创建触发器：trigger_tab1    –insert</strong></p>
+<pre><code>DROP TRIGGER IF EXISTS trigger_tab1;
+CREATE TRIGGER trigger_tab1;
+AFTER INSERT ON tab1
+FOR EACH ROW
+        insert into tab2(tab2_id) values(new.tab1_id);
+END;
+</code></pre><p>测试一下</p>
+<pre><code>INSERT INTO tab1(tab1_id) values(&quot;001&quot;);
+</code></pre><p>查看结果</p>
+<pre><code>SELECT * FROM tab1;
+SELECT * FROM tab2;
+</code></pre><p>查询出来两个表都是有相同的数据“001”就成功啦~！</p>
+<p><strong>创建触发器trigger_tab1   –delete</strong></p>
+<pre><code>DROP TRIGGER IF EXISTS trigger_tab1;
+CREATE TRIGGER trigger_tab1;
+AFTER DELETE ON tab1
+FOR EACH ROW
+BEGIN
+          delete from tab2 where tab2_id=old.tab1_id;
+END;
+</code></pre><p>测试一下</p>
+<pre><code>DELETE FROM tab1 WHERE tab1_id=&apos;001&apos;;
+</code></pre><p>查看结果</p>
+<pre><code>SELECT * FROM tab1;
+SELECT * FROM tab2;
+</code></pre><p>两条表里都没数据~成功！<br><strong>注意：</strong>使用别名old和new的区别<br>    作用：能够引用与触发程序相关的表中的列。<br>    用法：old是在操作之前，比如更新或删除之前，引用已有行中的一列。<br>               new是在操作之后，引用将要插入的新行的1列或已有行的1列。<br>    比如你用到更新就是：用用update前的列就用old，后的就用new</p>
+<p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
             </a>
-            <em>·</em>2018-02-05
         </div>
-        <a class="post-title" href="/2018/02/05/PHP去掉二维数组中某个元素重复的一维数组/" target="_blank" title="PHP去掉二维数组中某个元素重复的一维数组">PHP去掉二维数组中某个元素重复的一维数组</a>
-        <div class="post-meta">
-            <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
+        
+        <div class="post-tags">标签：
             
-                <em>·</em>
-                <a href="http://yoursite.com/tags/PHP/" target="_blank">PHP</a>
+            <a href="/tags/mysql/">mysql</a>
             
         </div>
-    </div>
-    <div class="post-desc">
-        PHP去掉二维数组中某个元素重复的一维数组
-    </div>
-</article>
-
-
-
+        
+    </article>
     
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
     
-<article class="post">
-    
-    <div class="post-header">
-        <div class="post-meta">
-            <a href="" target="_blank">
-                <strong></strong>
-            </a>
-            <em>·</em>2018-02-05
-        </div>
-        <a class="post-title" href="/2018/02/05/PHP-阿里大于短信接口案例/" target="_blank" title="PHP 阿里大于短信接口案例">PHP 阿里大于短信接口案例</a>
-        <div class="post-meta">
-            <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
-            
-                <em>·</em>
-                <a href="http://yoursite.com/tags/PHP/" target="_blank">PHP</a>
-            
-        </div>
-    </div>
-    <div class="post-desc">
-        PHP 阿里大于短信接口案例
-    </div>
-</article>
-
-
-
-    
-    
-<article class="post">
-    
-    <div class="post-header">
-        <div class="post-meta">
-            <a href="" target="_blank">
-                <strong></strong>
-            </a>
-            <em>·</em>2018-02-05
-        </div>
-        <a class="post-title" href="/2018/02/05/PHP计算时间，统计图表/" target="_blank" title="PHP计算时间，统计图表">PHP计算时间，统计图表</a>
-        <div class="post-meta">
-            <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
-            
-                <em>·</em>
-                <a href="http://yoursite.com/tags/PHP/" target="_blank">PHP</a>
-            
-        </div>
-    </div>
-    <div class="post-desc">
-        PHP计算时间，统计图表
-    </div>
-</article>
-
-
-
     
 </div>
-<!-- 分页开始 -->
-
-
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">
