@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/yangyang.png">
 
 
-<title>归档集- 2018 - 阳阳</title>
+<title>php 阿里大于短信接口案例 - 阳阳</title>
 
 <meta name="keywords" content="">
 
@@ -102,8 +102,10 @@
 </div>
             <div class="page-title">
     <ul>
-        <li><a href="/" data-name="首页" title="Back Home">首页</a></li>
-        <li><a href="/tags" data-name="标签云" title="标签云">标签</a></li>
+        <li><a href="/">最新</a></li>
+        
+        
+        
         <li class="page-search">
     <form id="search" class="search-form">
         <label for="s" class="sr-only">请输入关键字</label>
@@ -145,40 +147,88 @@
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <h3 class="post-title">坦率的讲 - 本站目前共计2篇文章</h3>
-        </div>
-        <p><img src="/images/category-bg.jpg" alt="category-bg"></p>
-        <div class="post-content markdown-body" itemprop="articleBody">
-            <div class="archives">
-                
-                
-                
-                
-                
-                <div class="archives-item">
-                    <h2>2018年02月</h2>
-                    <ul class="archives_list">
-                        
-                        <li>05日10:42:42
-                            <a href="/2018/02/05/PHP-阿里大于短信接口案例/">PHP 阿里大于短信接口案例</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:27:20
-                            <a href="/2018/02/05/PHP计算时间，统计图表/">PHP计算时间，统计图表</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-                
-                
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-05">2018-02-05</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">PHP 阿里大于短信接口案例</h2>
+            <div class="post-meta">
+                本文总共1562个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
-    </article>
-</div>
+        <div class="post-content markdown-body">
+            <p>####首先下载SDK与DOME文档<br><a href="http://download.csdn.net/download/weixin_40810287/10041721" target="_blank" rel="noopener">http://download.csdn.net/download/weixin_40810287/10041721</a><br><strong>里面有接口dome直接复制dome文件里的代码粘贴到你的代码上改一下引入SDK路径与个人需要修改的信息就OK!</strong></p>
+<pre><code>&lt;?php
+include &apos;api_sdk/aliyun-php-sdk-core/Config.php&apos;;
+include_once &apos;api_sdk/Dysmsapi/Request/V20170525/SendSmsRequest.php&apos;;
 
+function sendSms() {
+
+    //此处需要替换成自己的AK信息
+    $accessKeyId = &quot;xOSsMzW4IZ9P05cc&quot;;
+    $accessKeySecret = &quot;Xdh8qqdesZ3xob94HRhSrkKctsUSgo&quot;;
+    //短信API产品名
+    $product = &quot;Dysmsapi&quot;;
+    //短信API产品域名
+    $domain = &quot;dysmsapi.aliyuncs.com&quot;;
+    //暂时不支持多Region
+    $region = &quot;cn-hangzhou&quot;;
+
+    //初始化访问的acsCleint
+    $profile = DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret);
+    DefaultProfile::addEndpoint(&quot;cn-hangzhou&quot;, &quot;cn-hangzhou&quot;, $product, $domain);
+    $acsClient= new DefaultAcsClient($profile);
+
+    $request = new Dysmsapi\Request\V20170525\SendSmsRequest;
+    //$request = new SendSmsRequest;
+
+    //必填-短信接收号码
+    $request-&gt;setPhoneNumbers(&quot;18336033555&quot;);
+    //必填-短信签名
+    $request-&gt;setSignName(&quot;测试签名&quot;);
+    //必填-短信模板Code
+    $request-&gt;setTemplateCode(&quot;SMS_106955001&quot;);
+    //选填-假如模板中存在变量需要替换则为必填(JSON格式)
+    $request-&gt;setTemplateParam(&quot;{\&quot;code\&quot;:\&quot;123456\&quot;}&quot;);
+    //选填-发送短信流水号
+    $request-&gt;setOutId(&quot;1234&quot;);
+
+    //发起访问请求
+    $acsResponse = $acsClient-&gt;getAcsResponse($request);
+    var_dump($acsResponse);
+ }
+
+sendSms();
+//querySendDetails();
+?&gt;
+</code></pre><p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/PHP/">PHP</a>
+            
+        </div>
+        
+    </article>
+    
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+</div>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">
