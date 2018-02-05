@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
+<!--
+//                            _ooOoo_
+//                           o8888888o
+//                           88" . "88
+//                           (| -_- |)
+//                            O\ = /O
+//                        ____/`---'\____
+//                      .   ' \\| |// `.
+//                       / \\||| : |||// \
+//                     / _||||| -:- |||||- \
+//                       | | \\\ - /// | |
+//                     | \_| ''\---/'' | |
+//                      \ .-\__ `-` ___/-. /
+//                   ___`. .' /--.--\ `. . __
+//                ."" '< `.___\_<|>_/___.' >'"".
+//               | | : `- \`.;`\ _ /`;.`/ - ` : | |
+//                 \ \ `-. \_ __\ /__ _/ .-` / /
+//         ======`-.____`-.___\_____/___.-`____.-'======
+//                            `=---='
+//                 拦截插件累计拦截逗比攻击"1381438"次！
+//         .............................................
+//                  佛祖保佑             永无BUG
+//          佛曰:
+//                  写字楼里写字间，写字间里程序员；
+//                  程序人员写程序，又拿程序换酒钱。
+//                  酒醒只在网上坐，酒醉还来网下眠；
+//                  酒醉酒醒日复日，网上网下年复年。
+//                  但愿老死电脑间，不愿鞠躬老板前；
+//                  奔驰宝马贵者趣，公交自行程序员。
+//                  别人笑我忒疯癫，我笑自己命太贱；
+//                  不见满街漂亮妹，哪个归得程序员？
+-->
+<head>
+    <!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0;url=http://yoursite.com/warn.html">
+<![endif]-->
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<meta http-equiv="mobile-agent" content="format=html5; url=http://yoursite.com">
+<meta name="author" content="阳阳">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/SimpleStyle.min.css">
+
+<link rel="shortcut icon" href="/images/yangyang.png">
+
+
+<title>thinkphp5.0结合websock-workman实现长连接 - 阳阳</title>
+
+<meta name="keywords" content="">
+
+<meta name="description " content="">
+</head>
+<body>
+<div id="nav">
+    <nav class="nav-menu">
+        <a class="site-name current" href="/" title="说">说</a>
+        <a class="site-index current" href="/"><i class="fa fa-home"></i><span>首页</span></a>
+        <a href="/archives" title="归档"><i class="fa fa-archives"></i><span>归档</span></a>
+        <a href="/tags" title="标签"><i class="fa fa-tags"></i><span>标签</span></a>
+        <!-- custom single page of menus -->
+        
+        
+        <a href="/help" title="帮助">
+            <i class="fa fa-question-circle"></i>
+            <span>帮助</span>
+        </a>
+        
+    </nav>
+</div>
+
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-sns-qr" href="javascript:"><i class="fa fa-telegram"></i></a>
+</div>
+
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+            <div id="cover">
+    <div class="cover-img"></div>
+    <div class="cover-info">
+        
+        <h1 class="cover-siteName">说IT</h1>
+        <h3 class="cover-siteTitle">做产品，写代码</h3>
+        <p class="cover-siteDesc">一个关注技术与人文的IT博客</p>
+        <div class="cover-sns">
+            
+            <div class="btn btn-github">
+                <a href="https://github.com/yang980622" target="_blank" title="github" ref="friend">
+                    <i class="fa fa-github"></i>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+            <div class="page-title">
+    <ul>
+        <li><a href="/">最新</a></li>
+        
+        
+        
+        <li class="page-search">
+    <form id="search" class="search-form">
+        <label for="s" class="sr-only">请输入关键字</label>
+        <input class="search-field" type="text" name="s" class="text" placeholder="请输入关键字" />
+        <button type="submit" class="search-form-submit" title="搜索"><i class="fa fa-search"></i></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+</li>
+
+    </ul>
+</div>
+<div class="main-inner">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-05">2018-02-05</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">ThinkPHP5.0结合websock-workman实现长连接</h2>
+            <div class="post-meta">
+                本文总共4680个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <p>###安装<br>下载：<a href="https://github.com/yang980622/tp5-workman" target="_blank" rel="noopener">sdk</a><br><br>请使用composer集成phpsocket.io。</p>
+<p>脚本中引用vendor中的autoload.php实现SocketIO相关类的加载。例如：</p>
+<pre><code>require_once &apos;/你的vendor路径/autoload.php&apos;;
+</code></pre><p>###服务端和客户端连接</p>
+<p>####创建一个SocketIO服务</p>
+<pre><code>&lt;?php
+require_once __DIR__.&apos;vendir/autoload.php&apos;;
+use Workerman\Workeer;
+use PHPSocketIO\SocketIO;
+
+
+//创建socket.io服务端，监听6225端口
+$io = new SocketIO(6225);
+//当有客户端连接时打印一行文字
+$io-&gt;on(&apos;connection&apos;,function($socket)use($io){
+    echo &quot;This is new connection&quot;
+})
+
+Worker::runAll();
+
+?&gt;
+</code></pre><p> ####客户端</p>
+<pre><code>&lt;script src=&apos;https://cdn.bootcss.com/socket.io/2.0.3/socket.io.js&apos;&gt;&lt;/script&gt;
+&lt;script&gt;
+// 如果服务端不在本机，请把127.0.0.1改成服务端ip
+var socket = io(&apos;http://127.0.0.1:3120&apos;);
+// 当连接服务端成功时触发connect默认事件
+socket.on(&apos;connect&apos;, function(){
+    console.log(&apos;connect success&apos;);
+});
+&lt;/script&gt;
+</code></pre><p>####自定义事件<br>soket.io主要是通过事件来进行通讯交互的。<br><br>socket连接除了自带的connect,message,disconnect三个事件以外，在服务端和客户端开发者可以自定义其他事件。<br><br>服务端和客户端都通过emit方法出发对端事件。<br><br>例如下面的代码在服务器定义了一个login事件，事件参数为$userName.</p>
+<pre><code>&lt;?php
+require_once __DIR__ . &apos;/vendor/autoload.php&apos;;
+use Workerman\Worker;
+use PHPSocketIO\SocketIO;
+
+$io = new SocketIO(6225);
+// 当有客户端连接时
+$io-&gt;on(&apos;connection&apos;, function($socket)use($io){
+  // 定义chat message事件回调函数
+  $socket-&gt;on(&apos;chat message&apos;, function($userName)use($io){
+    // 触发所有客户端定义的login事件
+    $io-&gt;emit(&apos;login&apos;, $userName);
+  });
+});
+Worker::runAll();
+</code></pre><p>客户端通过下面的方法触发服务端的chat message事件:</p>
+<pre><code>&lt;script src=&apos;//cdn.bootcss.com/socket.io/1.3.7/socket.io.js&apos;&gt;&lt;/script&gt;
+&lt;script&gt;
+// 连接服务端
+var socket = io(&apos;http://127.0.0.1:3120&apos;);
+// 触发服务端的login事件
+socket.emit(&apos;login&apos;, &apos;这个是消息内容...&apos;);
+// 服务端通过emit(&apos;login&apos;, $userName)触发客户端的login事件，返回信息
+socket.on(&apos;login&apos;, function(msg){
+    console.log(&apos;get message:&apos; + msg + &apos;userInfo&apos;);
+});
+&lt;/script&gt;
+</code></pre><p>####workerStart事件<br>phpsocket.io提供了workerStart事件回调，也就是当进程启动后准备好接受客户端链接时触发的回调。 一个进程生命周期只会触发一次。可以在这里设置一些全局的事情，比如开一个新的Worker端口等等。</p>
+<pre><code>require_once __DIR__ . &apos;/vendor/autoload.php&apos;;
+use Workerman\Worker;
+use PHPSocketIO\SocketIO;
+
+$io = new SocketIO(9120);
+
+// 监听一个http端口，通过http协议访问这个端口可以向所有客户端推送数据(url类似http://ip:9191?msg=xxxx)
+$io-&gt;on(&apos;workerStart&apos;, function()use($io) {
+    $inner_http_worker = new Worker(&apos;http://0.0.0.0:9191&apos;);
+    $inner_http_worker-&gt;onMessage = function($http_connection, $data)use($io){
+        if(!isset($_GET[&apos;msg&apos;])) {
+            return $http_connection-&gt;send(&apos;fail, $_GET[&quot;msg&quot;] not found&apos;);
+        }
+        $io-&gt;emit(&apos;chat message&apos;, $_GET[&apos;msg&apos;]);
+        $http_connection-&gt;send(&apos;ok&apos;);
+    };
+    $inner_http_worker-&gt;listen();
+});
+
+// 当有客户端连接时
+$io-&gt;on(&apos;connection&apos;, function($socket)use($io){
+  // 定义chat message事件回调函数
+  $socket-&gt;on(&apos;chat message&apos;, function($msg)use($io){
+    // 触发所有客户端定义的chat message from server事件
+    $io-&gt;emit(&apos;chat message from server&apos;, $msg);
+  });
+});
+
+Worker::runAll();
+</code></pre><p>phpsocket.io启动后开内部http端口通过phpsocket.io向客户端推送数据参考 <a href="web-msg-sender">web-msg-sender</a>.</p>
+<p>###分组<br>socket.io提供分组功能，允许向某个分组发送事件，例如向某个房间广播数据。<br><br>1、加入分组（一个连接可以加入多个分组）</p>
+<pre><code>$socket-&gt;join(&apos;group name&apos;);
+</code></pre><p>2、离开分组（连接断开时会自动从分组中离开）</p>
+<pre><code>$socket-&gt;leave(&apos;group name&apos;);
+</code></pre><p>###向客户端发送事件的各种方法<br>$io是SocketIO对象。$socket是客户端连接<br></p>
+<p>$data可以是数字和字符串，也可以是数组。当$data是数组时，客户端会自动转换为javascript对象。<br></p>
+<p>同理如果客户端向服务端emit某个事件传递的是一个javascript对象，在服务端接收时会自动转换为php数组。</p>
+<p>1、向当前客户端发送事件</p>
+<pre><code>$socket-&gt;emit(&apos;event name&apos;, $data);
+</code></pre><p>2、向所有客户端发送事件</p>
+<pre><code>$io-&gt;emit(&apos;event name&apos;, $data);
+</code></pre><p>3、向所有客户端发送事件，但不包括当前连接。</p>
+<pre><code>$socket-&gt;broadcast-&gt;emit(&apos;event name&apos;, $data);
+</code></pre><p>4、向某个分组的所有客户端发送事件</p>
+<pre><code>$io-&gt;to(&apos;group name&apos;)-&gt;emit(&apos;event name&apos;, $data);
+</code></pre><p>###获取客户端ip</p>
+<pre><code>$io-&gt;on(&apos;connection&apos;, function($socket)use($io){
+    var_dump($socket-&gt;conn-&gt;remoteAddress);
+});
+</code></pre><p>###关闭链接<br>    $socket-&gt;disconnect();</p>
+<p>###支持SSL(https wss)<br>SSL 要求workerman&gt;=3.3.7 phpsocket.io&gt;=1.1.1</p>
+<pre><code>&lt;?php
+require_once __DIR__ . &apos;/vendor/autoload.php&apos;;
+use Workerman\Worker;
+use PHPSocketIO\SocketIO;
+
+// 传入ssl选项，包含证书的路径
+$context = array(
+   &apos;ssl&apos; =&gt; array(
+   &apos;local_cert&apos;  =&gt; &apos;/your/path/of/server.pem&apos;,
+   &apos;local_pk&apos;    =&gt; &apos;/your/path/of/server.key&apos;,
+   &apos;verify_peer&apos; =&gt; false,
+    )
+);
+$io = new SocketIO(2021, $context);
+
+$io-&gt;on(&apos;connection&apos;, function($socket)use($io){
+ echo &quot;new connection coming\n&quot;;
+});
+
+Worker::runAll();
+</code></pre><p>####注意：<br>1、证书是要验证域名的，所以客户端链接时要指定域名才能顺利的建立链接。<br>2、客户端连接时不能再用http方式，要改成https类似下面这样。</p>
+<pre><code>&lt;script&gt;
+var socket = io(&apos;https://yoursite.com:3120&apos;);
+//.....
+&lt;/script&gt;
+</code></pre>
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/socket-PHP/">socket PHP</a>
+            
+        </div>
+        
+    </article>
+    
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+</div>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <footer class="footer">
+    <div class="footer-inner">
+        <p>
+            <a href="/about"  title="关于本站">关于本站</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <!-- 自定义链接 -->
+            <a href="/help" title="help" >急救中心</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/links" title="友情链接">友情链接</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/app" title="App下载">App下载</a>
+        </p>
+        <p>
+            本站点采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>，已建立<a href="/timeline" id="siteBuildingTime"></a>天<br/>
+            ©2017 基于<a href="http://hexo.io" target="_blank">Hexo</a>搭建
+            ，主题&nbsp<a href="https://github.com/tangkunyin/hexo-theme-jsimple" target="_blank">JSimple</a>
+            ，作者<a href="https://www.tangkunyin.com" target="_blank">唐先森</a>
+            ，Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>
+        </p>
+        
+
+    </div>
+</footer>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="/js/InsightSearch.js"></script>
+<script src="/js/SimpleCore.js"></script>
+
+</div>
+<div class="fixed-btn">
+    <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
+</div>
+<script>
+    $(function () {
+        SimpleCore.init({
+            buildingTime: '01/20/2018',
+            current: $('.post-tags').length > 0 ? 'post' : 'archive',
+            snsQRCode: '/images/sns-qrcode.png',
+            donateImg: '/images/donate-qr.png',
+        });
+    });
+</script>
+</body>
+</html>
