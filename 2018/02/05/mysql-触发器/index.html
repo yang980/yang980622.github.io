@@ -159,7 +159,7 @@
             </div>
             <h2 class="post-title">mysql 触发器</h2>
             <div class="post-meta">
-                本文总共1581个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+                本文总共1476个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
         <div class="post-content markdown-body">
@@ -183,6 +183,7 @@ CREATE TABLE tab1(tab2_id vachar(11));
 CREATE TRIGGER trigger_tab1;
 AFTER INSERT ON tab1
 FOR EACH ROW
+BEGIN
         insert into tab2(tab2_id) values(new.tab1_id);
 END;
 </code></pre><p>测试一下</p>
@@ -192,8 +193,6 @@ END;
 SELECT * FROM tab2;
 </code></pre><p>查询出来两个表都是有相同的数据“001”就成功啦~！</p>
 <p><strong>创建触发器trigger_tab1   –delete</strong></p>
-<p>DROP TRIGGER IF EXISTS <code>unit_price</code>;<br>CREATE TRIGGER <code>unit_price</code> AFTER UPDATE ON <code>price_price</code> FOR EACH ROW BEGIN</p>
-<p>END</p>
 <pre><code>DROP TRIGGER IF EXISTS trigger_tab1;
 CREATE TRIGGER trigger_tab1;
 AFTER DELETE ON tab1
