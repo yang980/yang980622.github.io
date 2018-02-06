@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/yangyang.png">
 
 
-<title>归档集 - 阳阳</title>
+<title>php导出excle图片与文字 - 阳阳</title>
 
 <meta name="keywords" content="">
 
@@ -102,8 +102,10 @@
 </div>
             <div class="page-title">
     <ul>
-        <li><a href="/" data-name="首页" title="Back Home">首页</a></li>
-        <li><a href="/tags" data-name="标签云" title="标签云">标签</a></li>
+        <li><a href="/">最新</a></li>
+        
+        
+        
         <li class="page-search">
     <form id="search" class="search-form">
         <label for="s" class="sr-only">请输入关键字</label>
@@ -145,124 +147,114 @@
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <h3 class="post-title">坦率的讲 - 本站目前共计14篇文章</h3>
-        </div>
-        <p><img src="/images/category-bg.jpg" alt="category-bg"></p>
-        <div class="post-content markdown-body" itemprop="articleBody">
-            <div class="archives">
-                
-                
-                
-                
-                
-                <div class="archives-item">
-                    <h2>2018年02月</h2>
-                    <ul class="archives_list">
-                        
-                        <li>06日11:40:51
-                            <a href="/2018/02/06/PHP导出excle图片与文字/">PHP导出excle图片与文字</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>06日11:10:04
-                            <a href="/2018/02/06/支付宝付款余额/">支付宝付款余额</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>06日11:03:43
-                            <a href="/2018/02/06/RSA加（解）密/">RSA加（解）密</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>06日10:41:28
-                            <a href="/2018/02/06/微信付款到用户/">微信付款到用户</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日16:39:58
-                            <a href="/2018/02/05/Liunx操作笔记/">Liunx操作笔记</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日15:41:09
-                            <a href="/2018/02/05/mysql存储过程/">mysql存储过程</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:57:57
-                            <a href="/2018/02/05/ThinkPHP5-0结合websocket-workman实现长连接/">ThinkPHP5.0结合websock-workman实现长连接</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:53:18
-                            <a href="/2018/02/05/PHP二进制文件AES加密算法/">PHP二进制文件AES加密算法</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:49:18
-                            <a href="/2018/02/05/nodejs服务端5秒心跳包/">nodejs服务端5秒心跳包</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:47:15
-                            <a href="/2018/02/05/mysql-触发器/">mysql 触发器</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:46:03
-                            <a href="/2018/02/05/阿里云centos7安装NGINX-MYSQL-PHP-FPM环境/">阿里云centos7安装NGINX+MYSQL+PHP-FPM环境</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:44:52
-                            <a href="/2018/02/05/PHP去掉二维数组中某个元素重复的一维数组/">PHP去掉二维数组中某个元素重复的一维数组</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:42:42
-                            <a href="/2018/02/05/PHP-阿里大于短信接口案例/">PHP 阿里大于短信接口案例</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:27:20
-                            <a href="/2018/02/05/PHP计算时间，统计图表/">PHP计算时间，统计图表</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-                
-                
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-06">2018-02-06</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">PHP导出excle图片与文字</h2>
+            <div class="post-meta">
+                本文总共4054个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
-    </article>
-</div>
+        <div class="post-content markdown-body">
+            <p>###前言</p>
+<p><strong>图片对excel来说是一个对象，正常是导出不到单元格里去，所以大家都很困惑到底该怎么使用PHP语言来进行导出呢！下面我就详细的讲解下怎么使用php导出图片到excel（此例是使用CI框架）</strong></p>
+<p>如果你没有<strong>PHPEXCEL类库，</strong>可以到<a href="http://phpexcel.codeplex.com/里去下载！" target="_blank" rel="noopener">http://phpexcel.codeplex.com/里去下载！</a><br>下载完成后导入到自己框架的第三方类库！~CI示例：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/7866960-9ab5bc49dfa7ed40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">注释：这个是CI项目的哦，别的框架放到类库里就行了</p>
+<p>下面开始我们的代码操作！~：</p>
+<pre><code> //CI框架引入PHPExcel
+$this-&gt;load-&gt;library(&apos;PHPExcel&apos;);
+//实例化PHPExcel类
+$objPHPExcel = new PHPExcel();
+</code></pre><p><strong>重点来了！！！！</strong></p>
+<pre><code>//图片处理类，这个才是图片导出的关键哦
+$objDrawing = new PHPExcel_Worksheet_Drawing();
+</code></pre><p>//然后正常设置我们导出图片的代码</p>
+<pre><code>$objPHPExcel-&gt;createSheet(0);
+$objPHPExcel-&gt;setActiveSheetIndex(0);
+$currentSheet = $objPHPExcel-&gt;getActiveSheet();
+</code></pre><p>// 水平居中（位置很重要，建议在最初始位置，这里我举例，ABCDEFG,可以按照自己的需求定义！~）</p>
+<pre><code>$objPHPExcel-&gt;setActiveSheetIndex(0)-&gt;getStyle(&apos;A&apos;)-&gt;getAlignment()-&gt;setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel-&gt;setActiveSheetIndex(0)-&gt;getStyle(&apos;B&apos;)-&gt;getAlignment()-&gt;setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel-&gt;setActiveSheetIndex(0)-&gt;getStyle(&apos;C&apos;)-&gt;getAlignment()-&gt;setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel-&gt;setActiveSheetIndex(0)-&gt;getStyle(&apos;D&apos;)-&gt;getAlignment()-&gt;setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel-&gt;setActiveSheetIndex(0)-&gt;getStyle(&apos;E&apos;)-&gt;getAlignment()-&gt;setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel-&gt;setActiveSheetIndex(0)-&gt;getStyle(&apos;F&apos;)-&gt;getAlignment()-&gt;setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel-&gt;setActiveSheetIndex(0)-&gt;getStyle(&apos;G&apos;)-&gt;getAlignment()-&gt;setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+</code></pre><p>// 设置个表格宽度（这个一定要设置哦，不然图片会大厨单元格的）</p>
+<pre><code>$objPHPExcel-&gt;getActiveSheet()-&gt;getColumnDimension(&apos;A&apos;)-&gt;setWidth(20);
+$objPHPExcel-&gt;getActiveSheet()-&gt;getColumnDimension(&apos;B&apos;)-&gt;setWidth(20);
+$objPHPExcel-&gt;getActiveSheet()-&gt;getColumnDimension(&apos;C&apos;)-&gt;setWidth(20);
+$objPHPExcel-&gt;getActiveSheet()-&gt;getColumnDimension(&apos;D&apos;)-&gt;setWidth(20);
+$objPHPExcel-&gt;getActiveSheet()-&gt;getColumnDimension(&apos;E&apos;)-&gt;setWidth(20);
+$objPHPExcel-&gt;getActiveSheet()-&gt;getColumnDimension(&apos;F&apos;)-&gt;setWidth(20);
+$objPHPExcel-&gt;getActiveSheet()-&gt;getColumnDimension(&apos;G&apos;)-&gt;setWidth(20);
+</code></pre><p>//设置第一行标题</p>
+<pre><code>$currentSheet-&gt;setCellValue(&apos;A1&apos;, &quot;序列号&quot;);
+$currentSheet-&gt;setCellValue(&apos;B1&apos;, &quot;设备ID&quot;);
+$currentSheet-&gt;setCellValue(&apos;C1&apos;, &quot;设备密码&quot;);
+$currentSheet-&gt;setCellValue(&apos;D1&apos;, &quot;设备编码&quot;);
+$currentSheet-&gt;setCellValue(&apos;E1&apos;, &quot;二维码&quot;);
+$currentSheet-&gt;setCellValue(&apos;F1&apos;, &quot;二维码&quot;);
+$currentSheet-&gt;setCellValue(&apos;G1&apos;, &quot;二维码&quot;);
+</code></pre><p>//定义变量初始化为2，从第二行开始</p>
+<pre><code>$idx          = 2;
+</code></pre><p>//开始循环数组数据！~</p>
+<pre><code>foreach ($devices as $device) {
+  //设置数据所在单元格，我这里把图片放在E里
+  $currentSheet-&gt;setCellValue(&apos;A&apos; . $idx, $device[&apos;sequence&apos;]);
+  $currentSheet-&gt;setCellValue(&apos;B&apos; . $idx, $device[&apos;device_unique&apos;]);
+  $currentSheet-&gt;setCellValue(&apos;C&apos; . $idx, $device[&apos;device_pwd&apos;]);
+  $currentSheet-&gt;setCellValue(&apos;D&apos; . $idx, $device[&apos;device_code&apos;]);
+  //设置单元格高度，这个是重点哦
+  $currentSheet-&gt;getRowDimension($idx) -&gt; setRowHeight(60);
+</code></pre><p><strong>图片操作来了！~~~</strong></p>
+<pre><code>  //获取图片
+  $this-&gt;load-&gt;model(&apos;Device_codes_model&apos;);
+  $codes = $this-&gt;Device_codes_model-&gt;getOneCodes($id);
+  //开始设置图片啦~~
+  $objDrawing-&gt;setPath($codes[&apos;code_file&apos;]);
+  // 设置图片宽度高度
+  $objDrawing-&gt;setHeight(80);//照片高度
+  $objDrawing-&gt;setWidth(80); //照片宽度
+  /*设置图片要插入的单元格*/
+  $objDrawing-&gt;setCoordinates(&apos;E&apos;.$idx);
+  // 图片偏移距离
+  $objDrawing-&gt;setOffsetX(12);
+  $objDrawing-&gt;setOffsetY(12);
+  $objDrawing-&gt;setWorksheet($objPHPExcel-&gt;getActiveSheet());
+  $idx++;
+}
+</code></pre><p>//导出excel到表格</p>
+<pre><code>$sheetWrite = PHPExcel_IOFactory::createWriter($objPHPExcel, &apos;Excel2007&apos;);
+</code></pre><p><strong>有没有对你起到帮助呢！不懂的可以咨询：WX：nxy18336033555 QQ:1264512198   加的时候备注一下哦！~</strong></p>
 
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/PHP/">PHP</a>
+            
+        </div>
+        
+    </article>
+    
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+</div>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">
