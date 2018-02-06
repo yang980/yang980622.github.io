@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/yangyang.png">
 
 
-<title>归档集- 2018 - 阳阳</title>
+<title>微信付款到用户 - 阳阳</title>
 
 <meta name="keywords" content="">
 
@@ -102,8 +102,10 @@
 </div>
             <div class="page-title">
     <ul>
-        <li><a href="/" data-name="首页" title="Back Home">首页</a></li>
-        <li><a href="/tags" data-name="标签云" title="标签云">标签</a></li>
+        <li><a href="/">最新</a></li>
+        
+        
+        
         <li class="page-search">
     <form id="search" class="search-form">
         <label for="s" class="sr-only">请输入关键字</label>
@@ -145,110 +147,106 @@
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <h3 class="post-title">坦率的讲 - 本站目前共计12篇文章</h3>
-        </div>
-        <p><img src="/images/category-bg.jpg" alt="category-bg"></p>
-        <div class="post-content markdown-body" itemprop="articleBody">
-            <div class="archives">
-                
-                
-                
-                
-                
-                <div class="archives-item">
-                    <h2>2018年02月</h2>
-                    <ul class="archives_list">
-                        
-                        <li>06日11:03:43
-                            <a href="/2018/02/06/RSA加（解）密/">RSA加（解）密</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>06日10:41:28
-                            <a href="/2018/02/06/微信付款到用户/">微信付款到用户</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日16:39:58
-                            <a href="/2018/02/05/Liunx操作笔记/">Liunx操作笔记</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日15:41:09
-                            <a href="/2018/02/05/mysql存储过程/">mysql存储过程</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:57:57
-                            <a href="/2018/02/05/ThinkPHP5-0结合websocket-workman实现长连接/">ThinkPHP5.0结合websock-workman实现长连接</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:53:18
-                            <a href="/2018/02/05/PHP二进制文件AES加密算法/">PHP二进制文件AES加密算法</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:49:18
-                            <a href="/2018/02/05/nodejs服务端5秒心跳包/">nodejs服务端5秒心跳包</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:47:15
-                            <a href="/2018/02/05/mysql-触发器/">mysql 触发器</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:46:03
-                            <a href="/2018/02/05/阿里云centos7安装NGINX-MYSQL-PHP-FPM环境/">阿里云centos7安装NGINX+MYSQL+PHP-FPM环境</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:44:52
-                            <a href="/2018/02/05/PHP去掉二维数组中某个元素重复的一维数组/">PHP去掉二维数组中某个元素重复的一维数组</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:42:42
-                            <a href="/2018/02/05/PHP-阿里大于短信接口案例/">PHP 阿里大于短信接口案例</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:27:20
-                            <a href="/2018/02/05/PHP计算时间，统计图表/">PHP计算时间，统计图表</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-                
-                
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-06">2018-02-06</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">微信付款到用户</h2>
+            <div class="post-meta">
+                本文总共4012个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
-    </article>
-</div>
+        <div class="post-content markdown-body">
+            <p>###微信付款到零钱接口<br>    header(‘content-type:text/html;charset=utf-8’);<br>    $data[‘mch_appid’]=’you APP’;<br>    $data[‘mchid’]=”you mchid”;<br>    $data[‘nonce_str’]=unicode();//随机字符串<br>    $data[‘partner_trade_no’]=time();//商户订单号<br>    $data[“openid”] = “user openid”;<br>    $data[‘check_name’]=’NO_CHECK’;//是否校验用户姓名针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）收款用户姓名    re_user_name    可选    马花花    String    收款用户真实姓名<br>    $data[‘amount’]=$amount;//企业付款金额，单位为分<br>    $data[‘desc’]=’备注’;//订单备注<br>    $data[‘spbill_create_ip’]=$_SERVER[‘SERVER_ADDR’];//调用接口机器的IP地址<br>    $data=array_filter($data);<br>    ksort($data);<br>    $str=’’;<br>    foreach($data as $k=&gt;$v) {<br>           $str.=$k.’=’.$v.’&amp;’;<br>    }<br>    $str.=’key=’.$secrect_key;<br>    $data[‘sign’]=md5($str);//签名<br>    $xml=arraytoxml($data);<br>    $url=’<a href="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers" target="_blank" rel="noopener">https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers</a>‘;<br>    $res=curl($xml,$url);<br>    $return=xmltoarray($res);</p>
+<p>###微信付款到银行卡接口<br>    //获取rsa密钥<br>    $pkcs[“mch_id”] = “you mchid”;<br>    $pkcs[‘nonce_str’]=unicode();//随机字符串<br>    $pkcs[‘sign_type’]=”MD5”; //签名格式<br>    $pkcs=array_filter($pkcs);<br>    ksort($pkcs);<br>    $pkcsStr = “”;<br>    foreach($pkcs as $k=&gt;$v) {<br>         $pkcsStr.=$k.’=’.$v.’&amp;’;<br>    }<br>    $pkcsStr.=’key=’.$secrect_key;<br>    $pkcs[‘sign’]=md5($pkcsStr);//根据签名格式设置<br>    $xml=arraytoxml($pkcs);<br>    $url = “<a href="https://fraud.mch.weixin.qq.com/risk/getpublickey" target="_blank" rel="noopener">https://fraud.mch.weixin.qq.com/risk/getpublickey</a>“;<br>    $res=xmltoarray(curl($xml,$url));</p>
+<p>RSA算法使用说明（非对称加密算法，算法采用RSA/ECB/OAEPPadding模式）</p>
+<pre><code>1、 调用获取RSA公钥API获取RSA公钥，落地成本地文件，假设为public.pem
+2、 确定public.pem文件的存放路径，同时修改代码中文件的输入路径，加载RSA公钥
+3、 用标准的RSA加密库对敏感信息进行加密，选择RSA_PKCS1_OAEP_PADDING填充模式
+      （eg：Java的填充方式要选 &quot; RSA/ECB/OAEPWITHSHA-1ANDMGF1PADDING&quot;）
+4、 得到进行rsa加密并转base64之后的密文
+5、 将密文传给微信侧相应字段，如付款接口（enc_bank_no/enc_true_name）
 
+接口默认输出PKCS#1格式的公钥，商户需根据自己开发的语言选择公钥格式 
+</code></pre><p>RSA公钥格式PKCS#1,PKCS#8互转说明</p>
+<pre><code>PKCS#1 转 PKCS#8:
+openssl rsa -RSAPublicKey_in -in &lt;filename&gt; -pubout
+
+PKCS#8 转 PKCS#1:
+openssl rsa -pubin -in &lt;filename&gt; -RSAPublicKey_out
+</code></pre><p>PKCS#1 格式密钥：</p>
+<pre><code>-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEArT82k67xybiJS9AD8nNAeuDYdrtCRaxkS6cgs8L9h83eqlDTlrdw
+zBVSv5V4imTq/URbXn4K0V/KJ1TwDrqOI8hamGB0fvU13WW1NcJuv41RnJVua0QA
+lS3tS1JzOZpMS9BEGeFvyFF/epbi/m9+2kUWG94FccArNnBtBqqvFncXgQsm98JB
+3a62NbS1ePP/hMI7Kkz+JNMyYsWkrOUFDCXAbSZkWBJekY4nGZtK1erqGRve8Jbx
+TWirAm/s08rUrjOuZFA21/EI2nea3DidJMTVnXVPY2qcAjF+595shwUKyTjKB8v1
+REPB3hPF1Z75O6LwuLfyPiCrCTmVoyfqjwIDAQAB
+-----END RSA PUBLIC KEY-----
+</code></pre><p>PKCS#8 格式密钥：</p>
+<pre><code>-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArT82k67xybiJS9AD8nNA
+euDYdrtCRaxkS6cgs8L9h83eqlDTlrdwzBVSv5V4imTq/URbXn4K0V/KJ1TwDrqO
+I8hamGB0fvU13WW1NcJuv41RnJVua0QAlS3tS1JzOZpMS9BEGeFvyFF/epbi/m9+
+lkUWG94FccArNnBtBqqvFncXgQsm98JB3a42NbS1ePP/hMI7Kkz+JNMyYsWkrOUF
+DCXAbSZkWBJekY4nGZtK1erqGRve8JbxTWirAm/s08rUrjOuZFA21/EI2nea3Did
+JMTVnXVPY2qcAjF+595shwUKyTjKB8v1REPB3hPF1Z75O6LwuLfyPiCrCTmVoyfq
+jwIDAQAB
+-----END PUBLIC KEY-----
+</code></pre><p>以上是获取RSA密钥及加密方法介绍，微信付款到银行卡API：</p>
+<pre><code>//引用封装的RSA加密类,详见博客RSA加（解）密
+include &quot;./extend/rsa/Rsa.php&quot;;
+$rsaClass = new \Rsa();
+$puth = file_put_contents(&quot;rsa_public_key.pem&quot;,$res[&quot;pub_key&quot;]);
+header(&apos;content-type:text/html;charset=utf-8&apos;);
+$data[&apos;mch_id&apos;]=&quot;you mch_id&quot;;
+$data[&apos;partner_trade_no&apos;]=time();//商户付款单号（自定义）
+$data[&apos;nonce_str&apos;]=unicode();
+$data[&apos;enc_bank_no&apos;]=$rsaClass-&gt;publicEncrypt(&quot;6217582000029437167&quot;);
+$data[&apos;enc_true_name&apos;]=$rsaClass-&gt;publicEncrypt(&quot;银行卡用户姓名&quot;);
+$data[&apos;bank_code&apos;]=&quot;1026&quot;;收款方开户行,详见: https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_4
+$data[&apos;amount&apos;]=$amount; 付款金额（分）
+$data[&apos;desc&apos;]=&apos;付款备注&apos;;
+$data=array_filter($data);
+ksort($data);
+$str=&apos;&apos;;
+foreach($data as $k=&gt;$v) {
+     $str.=$k.&apos;=&apos;.$v.&apos;&amp;&apos;;
+}
+$str.=&apos;key=&apos;.$secrect_key;
+$data[&apos;sign&apos;]=md5($str);//签名
+$xml=arraytoxml($data);
+$url=&apos;https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank&apos;;
+$res=curl($xml,$url);
+$return=xmltoarray($res);
+</code></pre><p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/微信/">微信</a>
+            
+        </div>
+        
+    </article>
+    
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+</div>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">

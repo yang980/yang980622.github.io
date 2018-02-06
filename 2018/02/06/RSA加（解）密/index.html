@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/yangyang.png">
 
 
-<title>归档集- 2018 - 阳阳</title>
+<title>rsa加（解）密 - 阳阳</title>
 
 <meta name="keywords" content="">
 
@@ -102,8 +102,10 @@
 </div>
             <div class="page-title">
     <ul>
-        <li><a href="/" data-name="首页" title="Back Home">首页</a></li>
-        <li><a href="/tags" data-name="标签云" title="标签云">标签</a></li>
+        <li><a href="/">最新</a></li>
+        
+        
+        
         <li class="page-search">
     <form id="search" class="search-form">
         <label for="s" class="sr-only">请输入关键字</label>
@@ -145,110 +147,124 @@
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <h3 class="post-title">坦率的讲 - 本站目前共计12篇文章</h3>
-        </div>
-        <p><img src="/images/category-bg.jpg" alt="category-bg"></p>
-        <div class="post-content markdown-body" itemprop="articleBody">
-            <div class="archives">
-                
-                
-                
-                
-                
-                <div class="archives-item">
-                    <h2>2018年02月</h2>
-                    <ul class="archives_list">
-                        
-                        <li>06日11:03:43
-                            <a href="/2018/02/06/RSA加（解）密/">RSA加（解）密</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>06日10:41:28
-                            <a href="/2018/02/06/微信付款到用户/">微信付款到用户</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日16:39:58
-                            <a href="/2018/02/05/Liunx操作笔记/">Liunx操作笔记</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日15:41:09
-                            <a href="/2018/02/05/mysql存储过程/">mysql存储过程</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:57:57
-                            <a href="/2018/02/05/ThinkPHP5-0结合websocket-workman实现长连接/">ThinkPHP5.0结合websock-workman实现长连接</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:53:18
-                            <a href="/2018/02/05/PHP二进制文件AES加密算法/">PHP二进制文件AES加密算法</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:49:18
-                            <a href="/2018/02/05/nodejs服务端5秒心跳包/">nodejs服务端5秒心跳包</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:47:15
-                            <a href="/2018/02/05/mysql-触发器/">mysql 触发器</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:46:03
-                            <a href="/2018/02/05/阿里云centos7安装NGINX-MYSQL-PHP-FPM环境/">阿里云centos7安装NGINX+MYSQL+PHP-FPM环境</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:44:52
-                            <a href="/2018/02/05/PHP去掉二维数组中某个元素重复的一维数组/">PHP去掉二维数组中某个元素重复的一维数组</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:42:42
-                            <a href="/2018/02/05/PHP-阿里大于短信接口案例/">PHP 阿里大于短信接口案例</a>
-                        </li>
-                        
-                
-                
-                
-                        <li>05日10:27:20
-                            <a href="/2018/02/05/PHP计算时间，统计图表/">PHP计算时间，统计图表</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-                
-                
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-06">2018-02-06</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">RSA加（解）密</h2>
+            <div class="post-meta">
+                本文总共2095个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
-    </article>
-</div>
+        <div class="post-content markdown-body">
+            <p>RSA加密（解密）类：</p>
+<pre><code>&lt;?php
 
+class Rsa {
+    private static $PRIVATE_KEY = &quot;you private_key&quot;;
+    private static $PUBLIC_KEY = &quot;you public_key&quot;;
+    /**
+     * 获取私钥
+     * @return bool|resource
+     */
+    private static function getPrivateKey()
+    {
+        $privKey = self::$PRIVATE_KEY;
+        return openssl_pkey_get_private($privKey);
+    }
+
+    /**
+     * 获取公钥
+     * @return bool|resource
+     */
+    private static function getPublicKey()
+    {
+        $publicKey = self::$PUBLIC_KEY;
+        $path = &quot;./rsa_public_key.pem&quot;;
+        $publicKey = file_get_contents($path);
+        return openssl_pkey_get_public($publicKey);
+    }
+
+    /**
+     * 私钥加密
+     * @param string $data
+     * @return null|string
+     */
+    public static function privEncrypt($data = &apos;&apos;)
+    {
+        if (!is_string($data)) {
+            return null;
+        }
+        return openssl_private_encrypt($data,$encrypted,self::getPrivateKey()) ? base64_encode($encrypted) : null;
+    }
+
+    /**
+     * 公钥加密
+     * @param string $data
+     * @return null|string
+     */
+    public static function publicEncrypt($data = &apos;&apos;)
+    {
+        if (!is_string($data)) {
+            return null;
+        }
+        return openssl_public_encrypt($data,$encrypted,self::getPublicKey()) ? base64_encode($encrypted) : null;
+    }
+
+    /**
+     * 私钥解密
+     * @param string $encrypted
+     * @return null
+     */
+    public static function privDecrypt($encrypted = &apos;&apos;)
+    {
+        if (!is_string($encrypted)) {
+            return null;
+        }
+        return (openssl_private_decrypt(base64_decode($encrypted), $decrypted, self::getPrivateKey())) ? $decrypted : null;
+    }
+
+    /**
+     * 公钥解密
+     * @param string $encrypted
+     * @return null
+     */
+    public static function publicDecrypt($encrypted = &apos;&apos;)
+    {
+        if (!is_string($encrypted)) {
+            return null;
+        }
+        return (openssl_public_decrypt(base64_decode($encrypted), $decrypted, self::getPublicKey())) ? $decrypted : null;
+    }
+}
+</code></pre><p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/PHP/">PHP</a>
+            
+        </div>
+        
+    </article>
+    
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+</div>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">
