@@ -159,13 +159,50 @@
             </div>
             <h2 class="post-title">微信付款到用户</h2>
             <div class="post-meta">
-                本文总共4012个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+                本文总共4232个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
         <div class="post-content markdown-body">
-            <p>###微信付款到零钱接口<br>    header(‘content-type:text/html;charset=utf-8’);<br>    $data[‘mch_appid’]=’you APP’;<br>    $data[‘mchid’]=”you mchid”;<br>    $data[‘nonce_str’]=unicode();//随机字符串<br>    $data[‘partner_trade_no’]=time();//商户订单号<br>    $data[“openid”] = “user openid”;<br>    $data[‘check_name’]=’NO_CHECK’;//是否校验用户姓名针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）收款用户姓名    re_user_name    可选    马花花    String    收款用户真实姓名<br>    $data[‘amount’]=$amount;//企业付款金额，单位为分<br>    $data[‘desc’]=’备注’;//订单备注<br>    $data[‘spbill_create_ip’]=$_SERVER[‘SERVER_ADDR’];//调用接口机器的IP地址<br>    $data=array_filter($data);<br>    ksort($data);<br>    $str=’’;<br>    foreach($data as $k=&gt;$v) {<br>           $str.=$k.’=’.$v.’&amp;’;<br>    }<br>    $str.=’key=’.$secrect_key;<br>    $data[‘sign’]=md5($str);//签名<br>    $xml=arraytoxml($data);<br>    $url=’<a href="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers" target="_blank" rel="noopener">https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers</a>‘;<br>    $res=curl($xml,$url);<br>    $return=xmltoarray($res);</p>
-<p>###微信付款到银行卡接口<br>    //获取rsa密钥<br>    $pkcs[“mch_id”] = “you mchid”;<br>    $pkcs[‘nonce_str’]=unicode();//随机字符串<br>    $pkcs[‘sign_type’]=”MD5”; //签名格式<br>    $pkcs=array_filter($pkcs);<br>    ksort($pkcs);<br>    $pkcsStr = “”;<br>    foreach($pkcs as $k=&gt;$v) {<br>         $pkcsStr.=$k.’=’.$v.’&amp;’;<br>    }<br>    $pkcsStr.=’key=’.$secrect_key;<br>    $pkcs[‘sign’]=md5($pkcsStr);//根据签名格式设置<br>    $xml=arraytoxml($pkcs);<br>    $url = “<a href="https://fraud.mch.weixin.qq.com/risk/getpublickey" target="_blank" rel="noopener">https://fraud.mch.weixin.qq.com/risk/getpublickey</a>“;<br>    $res=xmltoarray(curl($xml,$url));</p>
-<p>RSA算法使用说明（非对称加密算法，算法采用RSA/ECB/OAEPPadding模式）</p>
+            <p>###微信付款到零钱接口</p>
+<pre><code>header(&apos;content-type:text/html;charset=utf-8&apos;);
+$data[&apos;mch_appid&apos;]=&apos;you APP&apos;; 
+$data[&apos;mchid&apos;]=&quot;you mchid&quot;;
+$data[&apos;nonce_str&apos;]=unicode();//随机字符串
+$data[&apos;partner_trade_no&apos;]=time();//商户订单号
+$data[&quot;openid&quot;] = &quot;user openid&quot;;
+$data[&apos;check_name&apos;]=&apos;NO_CHECK&apos;;//是否校验用户姓名针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）收款用户姓名    re_user_name    可选    马花花    String    收款用户真实姓名
+$data[&apos;amount&apos;]=$amount;//企业付款金额，单位为分
+$data[&apos;desc&apos;]=&apos;备注&apos;;//订单备注
+$data[&apos;spbill_create_ip&apos;]=$_SERVER[&apos;SERVER_ADDR&apos;];//调用接口机器的IP地址
+$data=array_filter($data);
+ksort($data);
+$str=&apos;&apos;;
+foreach($data as $k=&gt;$v) {
+       $str.=$k.&apos;=&apos;.$v.&apos;&amp;&apos;;
+}
+$str.=&apos;key=&apos;.$secrect_key;
+$data[&apos;sign&apos;]=md5($str);//签名
+$xml=arraytoxml($data);
+$url=&apos;https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers&apos;;
+$res=curl($xml,$url);
+$return=xmltoarray($res);
+</code></pre><p>###微信付款到银行卡接口</p>
+<pre><code>//获取rsa密钥
+$pkcs[&quot;mch_id&quot;] = &quot;you mchid&quot;;
+$pkcs[&apos;nonce_str&apos;]=unicode();//随机字符串
+$pkcs[&apos;sign_type&apos;]=&quot;MD5&quot;; //签名格式
+$pkcs=array_filter($pkcs);
+ksort($pkcs);
+$pkcsStr = &quot;&quot;;
+foreach($pkcs as $k=&gt;$v) {
+     $pkcsStr.=$k.&apos;=&apos;.$v.&apos;&amp;&apos;;
+}
+$pkcsStr.=&apos;key=&apos;.$secrect_key;
+$pkcs[&apos;sign&apos;]=md5($pkcsStr);//根据签名格式设置
+$xml=arraytoxml($pkcs);
+$url = &quot;https://fraud.mch.weixin.qq.com/risk/getpublickey&quot;;
+$res=xmltoarray(curl($xml,$url));
+</code></pre><p>RSA算法使用说明（非对称加密算法，算法采用RSA/ECB/OAEPPadding模式）</p>
 <pre><code>1、 调用获取RSA公钥API获取RSA公钥，落地成本地文件，假设为public.pem
 2、 确定public.pem文件的存放路径，同时修改代码中文件的输入路径，加载RSA公钥
 3、 用标准的RSA加密库对敏感信息进行加密，选择RSA_PKCS1_OAEP_PADDING填充模式
