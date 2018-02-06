@@ -159,15 +159,27 @@
             </div>
             <h2 class="post-title">mysql存储过程</h2>
             <div class="post-meta">
-                本文总共319个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+                本文总共287个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
         <div class="post-content markdown-body">
-            <p>###创建存储过程<br>    DROP PROCEDURE IF EXISTS <code>procedure</code>;<br>    CREATE PROCEDURE <code>procedure</code>()<br>    BEGIN<br>        //逻辑语句<br>    END;</p>
-<pre><code>//调用
+            <p>###创建存储过程</p>
+<pre><code>DROP PROCEDURE IF EXISTS `procedure`;
+CREATE PROCEDURE `procedure`()
+BEGIN
+    //逻辑语句
+END;
+
+//调用
 call procedure()
-</code></pre><p>###创建带参数存储过程<br>    DROP PROCEDURE IF EXISTS <code>procedure</code>;<br>        CREATE PROCEDURE <code>procedure</code>(p_id INT,price decimal)<br>        BEGIN<br>            //逻辑语句<br>        END;</p>
-<pre><code>//调用
+</code></pre><p>###创建带参数存储过程</p>
+<pre><code>DROP PROCEDURE IF EXISTS `procedure`;
+CREATE PROCEDURE `procedure`(p_id INT,price decimal)
+BEGIN
+        //逻辑语句
+END;
+
+//调用
 call procedure(p_id,price)
 </code></pre>
         </div>
