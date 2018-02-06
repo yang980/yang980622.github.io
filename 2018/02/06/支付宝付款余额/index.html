@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/yangyang.png">
 
 
-<title>阳阳 - </title>
+<title>支付宝付款余额 - 阳阳</title>
 
 <meta name="keywords" content="">
 
@@ -102,9 +102,9 @@
 </div>
             <div class="page-title">
     <ul>
-        <li class="active">
-            <a href="/" data-name="最近文章">最近</a>
-        </li>
+        <li><a href="/">最新</a></li>
+        
+        
         
         <li class="page-search">
     <form id="search" class="search-form">
@@ -145,100 +145,72 @@
     </ul>
 </div>
 <div class="main-inner">
-    
-    <!-- 首页默认取最最新文章集 -->
-    
-    
-<article class="post">
-    
-    <div class="post-header">
-        <div class="post-meta">
-            <a href="" target="_blank">
-                <strong></strong>
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="" target="_blank">
+                    <img width="48" src="" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="" target="_blank"></a>
+                    <span title="最后编辑于2018-02-06">2018-02-06</span>
+                </p>
+                <p></p>
+            </div>
+            <h2 class="post-title">支付宝付款余额</h2>
+            <div class="post-meta">
+                本文总共1388个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <p>###php 支付宝付款到余额<br>首先下载支付宝<a href="https://github.com/yang980622/aliapy" target="_blank" rel="noopener">SDK</a><br><br>本人使用的是thinkphp5.0 语法</p>
+<pre><code>vendor(&quot;alipay.aop.AopClient&quot;);
+vendor(&quot;alipay.aop.request.AlipayFundTransToaccountTransferRequest&quot;);
+$aop = new \AopClient();
+$aop-&gt;gatewayUrl = &apos;https://openapi.alipay.com/gateway.do&apos;;
+$aop-&gt;appId = &quot;you appid&quot;;
+$aop-&gt;rsaPrivateKey = &quot;you rsaPrivateKey&quot;;
+aop-&gt;alipayrsaPublicKey= &quot;you alipayrsaPublicKey&quot;;
+$aop-&gt;apiVersion = &apos;1.0&apos;;//api版本
+$aop-&gt;signType = &apos;RSA2&apos;; //签名格式
+$aop-&gt;postCharset=&apos;utf-8&apos;;//提交编码
+$aop-&gt;format=&apos;json&apos;;//格式
+$request = new \AlipayFundTransToaccountTransferRequest ();
+$request-&gt;setBizContent(&quot;{&quot; .
+        &quot;\&quot;out_biz_no\&quot;:&quot; .time().&quot;,&quot;.
+        &quot;\&quot;payee_type\&quot;:\&quot;ALIPAY_LOGONID\&quot;,&quot; .
+        &quot;\&quot;payee_account\&quot;:&quot; .支付宝账号.&quot;,&quot;.
+        &quot;\&quot;amount\&quot;:&quot; .$amount.&quot;,&quot;.//金额
+        &quot;\&quot;remark\&quot;:\&quot;备注\&quot;&quot; .
+        &quot;}&quot;);
+$result = $aop-&gt;execute($request);
+$responseNode = str_replace(&quot;.&quot;, &quot;_&quot;, $request-&gt;getApiMethodName()) . &quot;_response&quot;;
+$resultCode = $result-&gt;$responseNode-&gt;code;
+if(!empty($resultCode)&amp;&amp;$resultCode == 10000){
+         成功
+}
+</code></pre><p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
             </a>
-            <em>·</em>2018-02-05
         </div>
-        <a class="post-title" href="/2018/02/05/PHP去掉二维数组中某个元素重复的一维数组/" target="_blank" title="PHP去掉二维数组中某个元素重复的一维数组">PHP去掉二维数组中某个元素重复的一维数组</a>
-        <div class="post-meta">
-            <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
+        
+        <div class="post-tags">标签：
             
-                <em>·</em>
-                <a href="http://yoursite.com/tags/PHP/" target="_blank">PHP</a>
+            <a href="/tags/支付宝/">支付宝</a>
             
         </div>
-    </div>
-    <div class="post-desc">
-        PHP去掉二维数组中某个元素重复的一维数组
-    </div>
-</article>
-
-
-
+        
+    </article>
     
-    
-<article class="post">
-    
-    <div class="post-header">
-        <div class="post-meta">
-            <a href="" target="_blank">
-                <strong></strong>
-            </a>
-            <em>·</em>2018-02-05
-        </div>
-        <a class="post-title" href="/2018/02/05/PHP-阿里大于短信接口案例/" target="_blank" title="PHP 阿里大于短信接口案例">PHP 阿里大于短信接口案例</a>
-        <div class="post-meta">
-            <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
-            
-                <em>·</em>
-                <a href="http://yoursite.com/tags/PHP/" target="_blank">PHP</a>
-            
-        </div>
-    </div>
-    <div class="post-desc">
-        PHP 阿里大于短信接口案例
-    </div>
-</article>
-
-
-
-    
-    
-<article class="post">
-    
-    <div class="post-header">
-        <div class="post-meta">
-            <a href="" target="_blank">
-                <strong></strong>
-            </a>
-            <em>·</em>2018-02-05
-        </div>
-        <a class="post-title" href="/2018/02/05/PHP计算时间，统计图表/" target="_blank" title="PHP计算时间，统计图表">PHP计算时间，统计图表</a>
-        <div class="post-meta">
-            <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
-            
-                <em>·</em>
-                <a href="http://yoursite.com/tags/PHP/" target="_blank">PHP</a>
-            
-        </div>
-    </div>
-    <div class="post-desc">
-        PHP计算时间，统计图表
-    </div>
-</article>
-
-
-
+    <p>本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
     
     
 </div>
-<!-- 分页开始 -->
-
-<div id="btn-pager">
-    
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-</div>
-
-
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">
