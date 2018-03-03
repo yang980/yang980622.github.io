@@ -49,7 +49,7 @@
 <link rel="shortcut icon" href="/images/yangyang.png">
 
 
-<title>php 阿里大于短信接口案例 - 阳阳</title>
+<title>ajax异步上传多文件 - 阳阳</title>
 
 <meta name="keywords" content="">
 
@@ -153,62 +153,222 @@
                 </a>
                 <p><span class="label">作者</span>
                     <a href="" target="_blank"></a>
-                    <span title="最后编辑于2018-02-05">2018-02-05</span>
+                    <span title="最后编辑于2018-03-03">2018-03-03</span>
                 </p>
                 <p></p>
             </div>
-            <h2 class="post-title">PHP 阿里大于短信接口案例</h2>
+            <h2 class="post-title">ajax异步上传多文件</h2>
             <div class="post-meta">
-                本文总共1562个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+                本文总共4577个字 | 您是第<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
         <div class="post-content markdown-body">
-            <p>####首先下载SDK与DOME文档<br><a href="http://download.csdn.net/download/weixin_40810287/10041721" target="_blank" rel="noopener">http://download.csdn.net/download/weixin_40810287/10041721</a><br><strong>里面有接口dome直接复制dome文件里的代码粘贴到你的代码上改一下引入SDK路径与个人需要修改的信息就OK!</strong></p>
-<pre><code>&lt;?php
-include &apos;api_sdk/aliyun-php-sdk-core/Config.php&apos;;
-include_once &apos;api_sdk/Dysmsapi/Request/V20170525/SendSmsRequest.php&apos;;
+            <p>用到两个对象</p>
+<p>第一个对象：FormData</p>
+<p>第二个对象：XMLHttpRequest</p>
+<p>目前新版的Firefox 与 Chrome 等支持HTML5的浏览器完美的支持这两个对象，但IE9尚未支持 FormData 对象，还在用IE6 ? 只能仰天长叹….</p>
+<p>有了这两个对象，我们可以真正的实现Ajax方式上传文件。</p>
+<p>示例代码：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
 
-function sendSms() {
+&lt;html&gt;
 
-    //此处需要替换成自己的AK信息
-    $accessKeyId = &quot;xOSsMzW4IZ9P05cc&quot;;
-    $accessKeySecret = &quot;Xdh8qqdesZ3xob94HRhSrkKctsUSgo&quot;;
-    //短信API产品名
-    $product = &quot;Dysmsapi&quot;;
-    //短信API产品域名
-    $domain = &quot;dysmsapi.aliyuncs.com&quot;;
-    //暂时不支持多Region
-    $region = &quot;cn-hangzhou&quot;;
+&lt;head&gt;
 
-    //初始化访问的acsCleint
-    $profile = DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret);
-    DefaultProfile::addEndpoint(&quot;cn-hangzhou&quot;, &quot;cn-hangzhou&quot;, $product, $domain);
-    $acsClient= new DefaultAcsClient($profile);
+    &lt;title&gt;Html5 Ajax 上传文件&lt;/title&gt;
 
-    $request = new Dysmsapi\Request\V20170525\SendSmsRequest;
-    //$request = new SendSmsRequest;
+    &lt;script type=&quot;text/javascript&quot;&gt;
 
-    //必填-短信接收号码
-    $request-&gt;setPhoneNumbers(&quot;18336033555&quot;);
-    //必填-短信签名
-    $request-&gt;setSignName(&quot;测试签名&quot;);
-    //必填-短信模板Code
-    $request-&gt;setTemplateCode(&quot;SMS_106955001&quot;);
-    //选填-假如模板中存在变量需要替换则为必填(JSON格式)
-    $request-&gt;setTemplateParam(&quot;{\&quot;code\&quot;:\&quot;123456\&quot;}&quot;);
-    //选填-发送短信流水号
-    $request-&gt;setOutId(&quot;1234&quot;);
 
-    //发起访问请求
-    $acsResponse = $acsClient-&gt;getAcsResponse($request);
-    var_dump($acsResponse);
- }
 
-sendSms();
-//querySendDetails();
-?&gt;
-</code></pre><p><strong>不懂的可以咨询：WX：nxy18336033555 QQ:1264512198</strong></p>
+        function UpladFile() {
 
+
+
+            var fileObj = document.getElementByIdx_x_x(&quot;file&quot;).files[0]; // 获取文件对象
+
+            var FileController = &quot;../file/save&quot;;                    // 接收上传文件的后台地址 
+
+
+
+            // FormData 对象
+
+            var form = new FormData();
+
+            form.append(&quot;author&quot;, &quot;hooyes&quot;);                        // 可以增加表单数据
+
+            form.append(&quot;file&quot;, fileObj);                           // 文件对象
+
+
+
+            // XMLHttpRequest 对象
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open(&quot;post&quot;, FileController, true);
+
+            xhr.onload = function () {
+
+                alert(&quot;上传完成!&quot;);
+
+            };
+
+            xhr.send(form);
+
+
+
+        }
+
+&lt;/script&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;input type=&quot;file&quot; id=&quot;file&quot; name=&quot;myfile&quot; /&gt;
+
+&lt;input type=&quot;button&quot; onclick=&quot;UpladFile()&quot; value=&quot;上传&quot; /&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><p>很简洁的代码，便可以达到Ajax方式上传文件，上面的代码中使用<input type="file">这种传统的选择文件的方法产生文件对象，HTML5还支持使用多种更灵活的方式，如拖拽文件到指定的元素上产生。</p>
+<p>Ajax已成功上传文件，但这时我们会想到一个问题，如何显示进度条？带着这个问题，脑子会想到，Flash? 浏览器插件？。</p>
+<p>NO,现在不需要这些东西了。</p>
+<p>开始着手，先做一个进度条，进度条也很简单，使用HTML5 新加的标签：</p>
+<pre><code>&lt;progress id=&quot;progressBar&quot; value=&quot;0&quot; max=&quot;100&quot;&gt; &lt;/progress&gt;
+</code></pre><p>这个在浏览器中便会呈现了一个进度条，现在我们要做的就是在上传的时候，实时的去改变它的Value值，然后进度显示的问题便交给它了。</p>
+<p>我们的服务器端无需修改，只需要在JS中XHR对象加一个事件。</p>
+<pre><code>xhr.upload.addEventListener(&quot;progress&quot;, progressFunction, false)
+</code></pre><p>progressFunction 被调用的时候会传进一个事件对象，这个对象有两个属性，一个就是loaded 一个是total ，分别代表，已上传的值，和总要上传的值。</p>
+<p>这正是我们需要的，所以这个方法，可以这样写：</p>
+<pre><code>function progressFunction(evt) {
+
+            var progressBar = document.getElementByIdx_x_x(&quot;progressBar&quot;);
+
+            if (evt.lengthComputable) {
+
+                progressBar.max = evt.total;      
+
+                progressBar.value = evt.loaded;
+
+
+
+            }
+
+        }
+</code></pre><p>这样便可以完成，上传进度显示了。</p>
+<p>如下针对上面的第一个示例代码，做一个调整：</p>
+<p>示例代码2，带进度显示：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+
+&lt;head&gt;
+
+    &lt;title&gt;Html5 Ajax 上传文件&lt;/title&gt;
+
+    &lt;script type=&quot;text/javascript&quot;&gt;
+
+        function UpladFile() {
+
+            var fileObj = document.getElementByIdx_x_x(&quot;file&quot;).files[0]; // js 获取文件对象
+
+            var FileController = &quot;../file/save&quot;;                    // 接收上传文件的后台地址 
+
+
+
+            // FormData 对象
+
+            var form = new FormData();
+
+            form.append(&quot;author&quot;, &quot;hooyes&quot;);                        // 可以增加表单数据
+
+            form.append(&quot;file&quot;, fileObj);                           // 文件对象
+
+
+
+            // XMLHttpRequest 对象
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open(&quot;post&quot;, FileController, true);
+
+            xhr.onload = function () {
+
+               // alert(&quot;上传完成!&quot;);
+
+            };
+
+            xhr.upload.addEventListener(&quot;progress&quot;, progressFunction, false);
+
+
+
+            xhr.send(form);
+
+
+
+        }
+
+        function progressFunction(evt) {
+
+            var progressBar = document.getElementByIdx_x_x(&quot;progressBar&quot;);
+
+            var percentageDiv = document.getElementByIdx_x_x(&quot;percentage&quot;);
+
+            if (evt.lengthComputable) {
+
+                progressBar.max = evt.total;
+
+                progressBar.value = evt.loaded;
+
+                percentageDiv.innerHTML = Math.round(evt.loaded / evt.total * 100) + &quot;%&quot;;
+
+            }
+
+        }  
+
+    &lt;/script&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+    &lt;progress id=&quot;progressBar&quot; value=&quot;0&quot; max=&quot;100&quot;&gt;
+
+    &lt;/progress&gt;
+
+    &lt;span id=&quot;percentage&quot;&gt;&lt;/span&gt;
+
+    &lt;br /&gt;
+
+    &lt;input type=&quot;file&quot; id=&quot;file&quot; name=&quot;myfile&quot; /&gt;
+
+    &lt;input type=&quot;button&quot; onclick=&quot;UpladFile()&quot; value=&quot;上传&quot; /&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><p>后台接收文件的程序可以是任何语言(C#,PHP,Python 等)编写的，上述例子使用C#</p>
+<p>很简单，无需为这个进度条做任何改动。</p>
+<pre><code>var flist = Request.Files;
+
+
+
+            for (int i = 0; i &lt; flist.Count; i++)
+
+            {
+
+                string FilePath = &quot;E:\\hooyes\\Files\\&quot;;
+
+                var c = flist[i];
+
+                FilePath = Path.Combine(FilePath, c.FileName);
+
+                c.SaveAs(FilePath);
+
+            }
+</code></pre>
         </div>
         <div class="post-tool">
             <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
@@ -218,7 +378,7 @@ sendSms();
         
         <div class="post-tags">标签：
             
-            <a href="/tags/PHP/">PHP</a>
+            <a href="/tags/jquery-H5/">jquery H5</a>
             
         </div>
         
